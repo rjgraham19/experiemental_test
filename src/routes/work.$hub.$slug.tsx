@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { useScrollScrubVideo } from "@/hooks/use-scroll-scrub-video";
 import { AnimatedHeading, RevealBlock } from "@/components/animated-text";
 import tabAnimation from "@/assets/rg/tab-animation.svg";
+import { InlineAnimatedSvg } from "@/components/inline-animated-svg";
 import {
   HUBS,
   PROJECTS,
@@ -142,7 +143,7 @@ function ProjectPage() {
   };
 
   return (
-    <div className={`relative ${mood.wrap}`}>
+    <div className={`relative ${mood.wrap}${isLollapalooza ? " lolla-cursor" : ""}`}>
       <SiteNav />
 
       {/* Back — to /work for tagged projects, to hub for visualizations */}
@@ -238,10 +239,9 @@ function ProjectPage() {
           rather than appearing as a visible hard cut. */}
       {isTab && (
         <div className="w-full bg-black">
-          <img
+          <InlineAnimatedSvg
             src={tabAnimation}
-            alt=""
-            className="block w-full h-auto"
+            className="block w-full [&>svg]:block [&>svg]:w-full [&>svg]:h-auto"
           />
         </div>
       )}

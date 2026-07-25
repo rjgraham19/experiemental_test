@@ -296,3 +296,14 @@
     color: var(--color-accent-foreground);
   }
 }
+
+/* Y2K custom cursor — Lollapalooza project page only.
+   Scoped to .lolla-cursor (applied to that route's root element), so it
+   can't leak site-wide. The descendant selector is needed because
+   interactive elements set their own cursor (e.g. Tailwind's
+   cursor-pointer on buttons/links) and would otherwise override it.
+   `auto` is the fallback if the image fails to load. */
+.lolla-cursor,
+.lolla-cursor * {
+  cursor: url("/lolla-cursor.png") 0 0, auto;
+}

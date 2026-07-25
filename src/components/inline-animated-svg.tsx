@@ -1,14 +1,15 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Fetches an SVG file and injects its markup directly into the page DOM
- * (not via <object>/<img>), so any embedded scripts run in the same
- * document as the rest of the page. innerHTML doesn't execute <script>
- * tags on its own, so any scripts found after injecting are manually
- * recreated and re-inserted to force the browser to actually run them.
+ * Embeds an SVGator-exported SVG that carries its own <script>.
  *
- * No custom trigger/playback logic — whatever the file itself is
- * configured to do (e.g. autoplay on load) just happens on its own.
+ * The markup is fetched and injected into the real page DOM — not via
+ * <img>, <object>, or background-image, all of which drop or sandbox the
+ * script. innerHTML alone won't execute <script> tags, so each one is
+ * recreated after injection to force the browser to run it.
+ *
+ * No playback/trigger code here on purpose: this SVG is exported with
+ * its own "on scroll into view" trigger and handles starting itself.
  */
 export function InlineAnimatedSvg({
   src,
@@ -30,8 +31,8 @@ export function InlineAnimatedSvg({
         if (cancelled || !container) return;
         container.innerHTML = markup;
 
-        const scripts = container.querySelectorAll("script");
-        scripts.forEach((oldScript) => {
+        // innerHTML doesn't run scripts — recreate them so they execute.
+        container.querySelectorAll("script").forEach((oldScript) => {
           const newScript = document.createElement("script");
           for (const attr of Array.from(oldScript.attributes)) {
             newScript.setAttribute(attr.name, attr.value);

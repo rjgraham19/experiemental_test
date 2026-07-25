@@ -15,6 +15,7 @@ import anne from "@/assets/rg/anne-frank-full.jpg";
 import anneDet from "@/assets/rg/anne-frank-detail.jpg";
 import reshuf from "@/assets/rg/reshuffling-full.jpg";
 import tab from "@/assets/rg/tab-full.jpg";
+import lollaClubMagenta from "@/assets/rg/lollapalooza-clubmagenta.jpg";
 import fieldHouse from "@/assets/rg/p3_2.jpg.asset.json";
 import fieldHouseDet from "@/assets/rg/p3_3.jpg.asset.json";
 import townHouse from "@/assets/rg/p3_4.jpg.asset.json";
@@ -152,9 +153,9 @@ export const PROJECTS: Project[] = [
     // PLACEHOLDER copy — replace once real project copy is provided.
     description:
       "PLACEHOLDER description — Y2K/futurism-themed experiential work. Replace with real project copy.",
-    cover: heroPayphone,
+    cover: lollaClubMagenta,
     media: [
-      { type: "image", src: heroPayphone, caption: "PLACEHOLDER hero image — replace with real Lollapalooza photo" },
+      { type: "image", src: lollaClubMagenta, caption: "Club Magenta — night view, full front elevation" },
     ],
   },
 

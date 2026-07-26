@@ -323,7 +323,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "townhouse",
     highlight: hlTownhouse,
-    highlightPosition: "50% 20%",
+    highlightPosition: "50% 50%",
     hub: "architecture",
     title: "Townhouse",
     subtitle: "Inspired by the Croffead House by W.G. Clark",

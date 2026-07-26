@@ -16,6 +16,17 @@ import anneDet from "@/assets/rg/anne-frank-detail.jpg";
 import reshuf from "@/assets/rg/reshuffling-full.jpg";
 import tab from "@/assets/rg/tab-full.jpg";
 import lollaClubMagenta from "@/assets/rg/lollapalooza-clubmagenta.jpg";
+
+// Square-thumbnail highlight images (full/uncropped; framed via CSS).
+import hlTrueWest from "@/assets/rg/highlight-true-west.jpg";
+import hlFieldHouse from "@/assets/rg/highlight-field-house.jpg";
+import hlTownhouse from "@/assets/rg/highlight-townhouse.jpg";
+import hlExchange from "@/assets/rg/highlight-exchange.jpg";
+import hlStaging from "@/assets/rg/highlight-staging.jpg";
+import hlRenderings from "@/assets/rg/highlight-renderings.jpg";
+import hlDrafting from "@/assets/rg/highlight-drafting.jpg";
+import hlIllustration from "@/assets/rg/highlight-illustration.jpg";
+import hlPhysicalModels from "@/assets/rg/highlight-physical-models.jpg";
 import fieldHouse from "@/assets/rg/p3_2.jpg.asset.json";
 import fieldHouseDet from "@/assets/rg/p3_3.jpg.asset.json";
 import townHouse from "@/assets/rg/p3_4.jpg.asset.json";
@@ -101,6 +112,14 @@ export type Project = {
   tags?: ProjectTag[];
   /** Two-line thematic duality statement (used on True West). */
   dualityLines?: [string, string];
+  /**
+   * Full, uncropped image used for the square grid thumbnail. Framing is
+   * done in CSS via object-fit: cover + highlightPosition — the source
+   * file is never cropped.
+   */
+  highlight?: string;
+  /** CSS object-position for the square thumbnail crop. Defaults to center. */
+  highlightPosition?: string;
 };
 
 export const HUBS: {
@@ -187,6 +206,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "true-west",
+    highlight: hlTrueWest,
+    highlightPosition: "50% 50%",
     hub: "production-scenic",
     title: "True West",
     subtitle: "Newman Studio @ the University of Michigan",
@@ -283,6 +304,8 @@ export const PROJECTS: Project[] = [
   // ─── Architecture (order per spec) ───────────────────────────────
   {
     slug: "field-house",
+    highlight: hlFieldHouse,
+    highlightPosition: "70% 50%",
     hub: "architecture",
     title: "Field House",
     subtitle: "Community Tennis & Recreational Building",
@@ -299,6 +322,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "townhouse",
+    highlight: hlTownhouse,
+    highlightPosition: "50% 20%",
     hub: "architecture",
     title: "Townhouse",
     subtitle: "Inspired by the Croffead House by W.G. Clark",
@@ -315,6 +340,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "the-exchange-facility",
+    highlight: hlExchange,
+    highlightPosition: "33% 50%",
     hub: "architecture",
     title: "The Exchange Facility",
     subtitle: "A Speculative Future: World Building",
@@ -329,6 +356,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "staging-aesthetics",
+    highlight: hlStaging,
+    highlightPosition: "50% 55%",
     hub: "architecture",
     title: "Staging Aesthetics",
     subtitle: "Projecting the Politics of Time + Space",
@@ -373,6 +402,8 @@ export const PROJECTS: Project[] = [
   // ─── Visualizations (order per spec: Renderings first) ───────────
   {
     slug: "renderings",
+    highlight: hlRenderings,
+    highlightPosition: "55% 50%",
     hub: "visualizations",
     title: "Renderings",
     subtitle: "Immersion",
@@ -388,6 +419,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "construction-drafting",
+    highlight: hlDrafting,
+    highlightPosition: "50% 30%",
     hub: "visualizations",
     title: "Construction Drafting",
     subtitle: "Building Enclosures + Drafting for the Entertainment World",
@@ -401,6 +434,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "illustration",
+    highlight: hlIllustration,
+    highlightPosition: "50% 50%",
     hub: "visualizations",
     title: "Illustration",
     subtitle: "Editorial Graphics · Drawing + Painting Samples",
@@ -414,6 +449,8 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "physical-models",
+    highlight: hlPhysicalModels,
+    highlightPosition: "50% 50%",
     hub: "visualizations",
     title: "Physical Models",
     subtitle: "Form Study · Stage Model for The Secret Garden",

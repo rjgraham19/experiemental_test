@@ -116,9 +116,10 @@ function ProjectTile({ project }: { project: Project }) {
       >
         <div className="relative aspect-square overflow-hidden rounded-md bg-black">
           <img
-            src={project.cover}
+            src={project.highlight ?? project.cover}
             alt={project.title}
             loading="lazy"
+            style={{ objectPosition: project.highlightPosition ?? "50% 50%" }}
             className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.06] transition-all duration-[900ms] ease-cinematic"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-95 group-hover:opacity-85 transition-opacity duration-500" />

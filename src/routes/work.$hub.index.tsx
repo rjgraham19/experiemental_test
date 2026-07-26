@@ -159,9 +159,10 @@ function ProjectTile({
           {/* Main square tile */}
           <div className="relative aspect-square overflow-hidden rounded-md bg-secondary">
             <img
-              src={project.cover}
+              src={project.highlight ?? project.cover}
               alt={project.title}
               loading="lazy"
+              style={{ objectPosition: project.highlightPosition ?? "50% 50%" }}
               className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-[1.05] transition-all duration-[900ms] ease-cinematic"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/10 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500" />

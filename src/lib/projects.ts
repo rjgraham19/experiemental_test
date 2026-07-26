@@ -27,6 +27,11 @@ import hlRenderings from "@/assets/rg/highlight-renderings.jpg";
 import hlDrafting from "@/assets/rg/highlight-drafting.jpg";
 import hlIllustration from "@/assets/rg/highlight-illustration.jpg";
 import hlPhysicalModels from "@/assets/rg/highlight-physical-models.jpg";
+
+// Full uncropped versions of the above, used as the wide hero on their project pages.
+import fieldHouseFull from "@/assets/rg/field-house-full.jpg";
+import townhouseFull from "@/assets/rg/townhouse-full.jpg";
+import stagingFull from "@/assets/rg/staging-full.jpg";
 import fieldHouse from "@/assets/rg/p3_2.jpg.asset.json";
 import fieldHouseDet from "@/assets/rg/p3_3.jpg.asset.json";
 import townHouse from "@/assets/rg/p3_4.jpg.asset.json";
@@ -146,7 +151,7 @@ export const HUBS: {
     tagline: "Field houses, town houses, and speculative infrastructure.",
     description:
       "Speculative and built architectural work — field houses, town houses, and speculative infrastructure that stages politics, ecology, and inhabitation.",
-    cover: fieldHouse.url,
+    cover: fieldHouseFull,
   },
   {
     slug: "visualizations",
@@ -313,10 +318,10 @@ export const PROJECTS: Project[] = [
     weight: "left",
     description:
       "Guided by accessibility and inclusive play for individuals of all ages and physical abilities, the Community Tennis and Recreational Building incorporates ramps to facilitate activity and motion around the courts — watching the game becomes as dynamic as playing it.",
-    cover: fieldHouse.url,
+    cover: fieldHouseFull,
     collage: [fieldHouseDet.url],
     media: [
-      { type: "image", src: fieldHouse.url, caption: "Perspective — long ramp folding through the courts" },
+      { type: "image", src: fieldHouseFull, caption: "Perspective — long ramp folding through the courts" },
       { type: "image", src: fieldHouseDet.url, caption: "Site section, axonometric and orthographic plans" },
     ],
   },
@@ -331,10 +336,10 @@ export const PROJECTS: Project[] = [
     weight: "right",
     description:
       "A narrow town house inspired by the Croffead House by W.G. Clark. A shifted floor plate divides interior life: a library at grade, a dining room that overhangs the street, and blue-cast interiors that echo the precedent while framing everyday domestic ritual.",
-    cover: townHouse.url,
+    cover: townhouseFull,
     collage: [townHouseDet.url],
     media: [
-      { type: "image", src: townHouse.url, caption: "Front Exterior Entry · Section · Plan · Inspiration precedent" },
+      { type: "image", src: townhouseFull, caption: "Front Exterior Entry · Section · Plan · Inspiration precedent" },
       { type: "image", src: townHouseDet.url, caption: "First Floor Interior (Library) · Exterior View of Dining Room · Rhino model views rendered in Enscape" },
     ],
   },
@@ -366,9 +371,9 @@ export const PROJECTS: Project[] = [
     notes: ["Honorable Mention, Wallenberg Foundation Awards"],
     description:
       "Projecting National Culture, The John F. Kennedy Center for the Performing Arts in Washington, D.C., serves as a contentious stage onto which competing visions of cultural identity are cast. This interactive installation utilizes animation software, projection mapping technology, and spatialized audio design to explore various alternative facades for the building, immersing viewers in the political stakes of architectural aesthetics.",
-    cover: staging.url,
+    cover: stagingFull,
     media: [
-      { type: "image", src: staging.url, caption: "Physical model — day condition and night projection-mapped facade" },
+      { type: "image", src: stagingFull, caption: "Physical model — day condition and night projection-mapped facade" },
     ],
     philosophyCards: [
       {

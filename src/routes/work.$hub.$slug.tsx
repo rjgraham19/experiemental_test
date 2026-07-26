@@ -195,7 +195,7 @@ function ProjectPage() {
 
             <AnimatedHeading
               text={project.title}
-              className="font-display font-black uppercase leading-[0.9] tracking-[-0.03em] text-5xl md:text-8xl text-balance max-w-5xl"
+              className="font-display font-black uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(2rem,11vw,3rem)] md:text-[clamp(3rem,8.5vw,6rem)] text-balance max-w-5xl"
             />
 
             <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-foreground/50">

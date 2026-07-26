@@ -1,10 +1,16 @@
 import { motion } from "motion/react";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 /**
  * Per-letter reveal for standout headline moments only (project titles).
- * Kept subtle: small blur/offset, quick stagger — not the flashier version
- * this was modeled on.
+ * Kept subtle: small blur/offset, quick stagger.
+ *
+ * Letters are grouped into per-word wrappers rather than emitted as one
+ * flat run. Each letter has to be inline-block in order to animate, and
+ * browsers treat inline-block elements as independent break
+ * opportunities — so a flat run wraps mid-word ("Tak / e"). Giving each
+ * word its own nowrap inline-block wrapper, with plain text spaces
+ * between words, makes those spaces the only place a line can break.
  */
 export function AnimatedHeading({
   text,
@@ -15,22 +21,42 @@ export function AnimatedHeading({
   className?: string;
   as?: "h1" | "h2";
 }) {
-  const letters = [...text];
+  // Precompute each word's starting letter index so the stagger stays
+  // continuous across the title instead of restarting on every word.
+  const words = text.split(" ");
+  let runningIndex = 0;
+  const wordsWithOffset = words.map((word) => {
+    const offset = runningIndex;
+    runningIndex += word.length;
+    return { word, offset };
+  });
+
   return (
     <Tag className={className} aria-label={text}>
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
-        {letters.map((ch, i) => (
-          <motion.span
-            key={i}
-            className="inline-block"
-            initial={{ opacity: 0, filter: "blur(4px)", y: 6 }}
-            whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.012, ease: "easeOut" }}
-          >
-            {ch === " " ? " " : ch}
-          </motion.span>
+        {wordsWithOffset.map(({ word, offset }, wordIndex) => (
+          <Fragment key={wordIndex}>
+            <span className="inline-block whitespace-nowrap">
+              {[...word].map((ch, charIndex) => (
+                <motion.span
+                  key={charIndex}
+                  className="inline-block"
+                  initial={{ opacity: 0, filter: "blur(4px)", y: 6 }}
+                  whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.4,
+                    delay: (offset + charIndex) * 0.012,
+                    ease: "easeOut",
+                  }}
+                >
+                  {ch}
+                </motion.span>
+              ))}
+            </span>
+            {wordIndex < wordsWithOffset.length - 1 ? " " : null}
+          </Fragment>
         ))}
       </span>
     </Tag>

@@ -290,6 +290,42 @@ function ProjectPage() {
       )}
       </div>
 
+      {/* TaB: Renaissance — closeup animation, directly under the hero.
+          Presented as a moving image rather than an embedded video: no
+          controls, no play badge, no poster affordance. Clicking opens it in
+          the lightbox like any other media on the page, where it plays. */}
+      {isTab && (
+        <section className="px-6 md:px-12 lg:px-16 py-8 md:py-10">
+          <div className="md:grid md:grid-cols-[1fr_1fr] md:gap-8 lg:gap-12 md:items-center">
+            <figure className="group">
+              <button
+                type="button"
+                onClick={() => setLightbox(1)}
+                className="block w-full overflow-hidden rounded-md bg-secondary"
+                aria-label="Enlarge TaB closeup animation"
+              >
+                <video
+                  src="/tab-closeup-animation.mp4"
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+                />
+              </button>
+            </figure>
+
+            <div className="mt-8 md:mt-0">
+              <RevealBlock>
+                <p className="font-display font-light text-lg md:text-xl lg:text-2xl leading-snug tracking-tight text-balance">
+                  {project.description}
+                </p>
+              </RevealBlock>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* TaB: Renaissance — full-bleed graphic marking the black-to-white transition.
           The graphic's own bottom portion is solid white; whatever comes after this
           section should start white too, so the seam is hidden behind the graphic
@@ -724,14 +760,30 @@ function ProjectPage() {
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
           >
-            <img
-              src={project.media[lightbox].src}
-              alt={project.media[lightbox].caption ?? project.title}
-              onClick={close}
-              style={{ transform: `scale(${zoom})`, transition: pinchStart.current ? "none" : "transform 120ms ease-out" }}
-              className="max-h-full max-w-full object-contain cursor-zoom-out select-none"
-              draggable={false}
-            />
+            {project.media[lightbox].type === "video" ? (
+              /* Enlarged video: autoplays, loops, no controls — it reads as a
+                 moving image rather than a video player, same as inline. */
+              <video
+                key={project.media[lightbox].src}
+                src={project.media[lightbox].src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                onClick={close}
+                style={{ transform: `scale(${zoom})`, transition: pinchStart.current ? "none" : "transform 120ms ease-out" }}
+                className="max-h-full max-w-full object-contain cursor-zoom-out select-none"
+              />
+            ) : (
+              <img
+                src={project.media[lightbox].src}
+                alt={project.media[lightbox].caption ?? project.title}
+                onClick={close}
+                style={{ transform: `scale(${zoom})`, transition: pinchStart.current ? "none" : "transform 120ms ease-out" }}
+                className="max-h-full max-w-full object-contain cursor-zoom-out select-none"
+                draggable={false}
+              />
+            )}
 
             {/* Chevron arrows over image */}
             <button

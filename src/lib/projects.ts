@@ -318,6 +318,7 @@ export const PROJECTS: Project[] = [
     tags: ["Production/Scenic", "Experiential"],
     media: [
       { type: "image", src: tab, caption: "Installation, branding, PINK FOUNTAIN diagram, and TaB Soda pop-up" },
+      { type: "video", src: "/tab-closeup-animation.mp4" },
     ],
   },
 

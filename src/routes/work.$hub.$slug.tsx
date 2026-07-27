@@ -130,6 +130,7 @@ function ProjectPage() {
   const isTrueWest = project.slug === "true-west";
   const isLollapalooza = project.slug === "lollapalooza";
   const isPortraitHero = project.heroPortrait === true;
+  const isTitleAbove = project.heroTitleAbove === true;
 
   const recordScrubWrapperRef = useRef<HTMLDivElement>(null);
   const recordScrubVideoRef = useRef<HTMLVideoElement>(null);
@@ -170,14 +171,21 @@ function ProjectPage() {
         )}
       </div>
 
-      {/* Header + hero — the title sits ON TOP of the hero image rather than above it.
-          Both are placed in the same single-cell grid so they occupy the same space and
-          overlap, instead of stacking. The title layer uses self-start so it's only as
-          tall as its own content plus the runway (rather than stretching to the image's
-          full height), which keeps the sticky release governed purely by that 300px
-          runway. The layer is pointer-events-none so the transparent runway doesn't
-          swallow clicks meant for the image; the title block re-enables them for its
-          own links. The downward gradient keeps the text legible over the photo. */}
+      {/* Header + hero.
+          Two arrangements, both keeping the same sticky behaviour:
+
+          • Overlay (default) — title and image sit in one single-cell grid so
+            they occupy the same space and the text reads over the photo. The
+            title layer uses self-start so it spans only its own content plus
+            the runway rather than the image's full height, which keeps the
+            sticky release governed purely by the 300px runway. It's
+            pointer-events-none so the transparent runway doesn't swallow
+            clicks meant for the image; its links re-enable them.
+
+          • Title-above (heroTitleAbove) — for compositions whose top carries
+            subject matter that shouldn't be covered. The title stacks above
+            and the image is pulled up by exactly the runway height so it
+            begins right where the title ends, with no gap and no overlap. */}
       <div
         className={
           isPortraitHero
@@ -185,12 +193,18 @@ function ProjectPage() {
             : "relative"
         }
       >
-      <div className="relative grid grid-cols-1 grid-rows-1">
-        <div className="col-start-1 row-start-1 self-start z-10 pointer-events-none">
+      <div className={isTitleAbove ? "relative" : "relative grid grid-cols-1 grid-rows-1"}>
+        <div
+          className={
+            isTitleAbove
+              ? "relative z-10"
+              : "col-start-1 row-start-1 self-start z-10 pointer-events-none"
+          }
+        >
           <div
-            className={`sticky top-16 md:top-20 pt-10 md:pt-14 pb-16 md:pb-24 pointer-events-none bg-gradient-to-b from-black via-black/70 to-transparent ${
-              isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"
-            }`}
+            className={`sticky top-16 md:top-20 pt-10 md:pt-14 bg-gradient-to-b from-black via-black/70 to-transparent ${
+              isTitleAbove ? "pb-8 md:pb-10" : "pb-16 md:pb-24 pointer-events-none"
+            } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"}`}
           >
             {project.tags && project.tags.length > 0 && (
               <div className="mb-4 flex flex-wrap gap-2">
@@ -230,9 +244,9 @@ function ProjectPage() {
         </div>
 
         <figure
-          className={`col-start-1 row-start-1 z-0 ${
-            isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"
-          }`}
+          className={`z-0 ${
+            isTitleAbove ? "relative -mt-[300px]" : "col-start-1 row-start-1"
+          } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"}`}
         >
           <button
             type="button"

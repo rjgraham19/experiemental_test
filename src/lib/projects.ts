@@ -131,6 +131,12 @@ export type Project = {
    * description set beside it instead of below.
    */
   heroPortrait?: boolean;
+  /**
+   * Title block sits directly above the hero image rather than overlaying
+   * it. For compositions where the top of the photo carries subject matter
+   * that shouldn't be covered. Sticky behaviour is unchanged either way.
+   */
+  heroTitleAbove?: boolean;
 };
 
 export const HUBS: {
@@ -174,6 +180,7 @@ export const PROJECTS: Project[] = [
   // ─── Experiential highlight (appears first under the Experiential tag) ──
   {
     slug: "lollapalooza",
+    heroTitleAbove: true,
     hub: "production-scenic",
     title: "Lollapalooza",
     subtitle: "PLACEHOLDER — venue/context line pending",
@@ -293,6 +300,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "tab-renaissance",
+    heroTitleAbove: true,
     hub: "production-scenic",
     title: "TaB: Renaissance",
     subtitle: "The Garden of Earthly Delights — Taubman Architecture Ball",
@@ -353,6 +361,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "the-exchange-facility",
+    heroTitleAbove: true,
     highlight: hlExchange,
     highlightPosition: "33% 50%",
     hub: "architecture",
@@ -369,6 +378,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "staging-aesthetics",
+    heroTitleAbove: true,
     heroPortrait: true,
     highlight: hlStaging,
     highlightPosition: "50% 55%",

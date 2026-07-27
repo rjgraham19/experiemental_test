@@ -19,7 +19,10 @@ export function SiteNav({
         to="/"
         className="font-display font-black uppercase tracking-[0.02em] text-sm md:text-base hover:text-accent transition-colors whitespace-nowrap"
       >
-        Reid Graham Design
+        {/* "Design" set thin against the bold name, echoing the homepage
+            wordmark's heavy/light pairing. Weight only — no colour override,
+            so the hover state still applies to the whole wordmark. */}
+        Reid Graham <span className="font-thin">Design</span>
       </Link>
       <ul className="flex flex-wrap items-center justify-end gap-2 md:gap-3">
         {/* PROJECTS — primary, with hover dropdown of disciplines */}

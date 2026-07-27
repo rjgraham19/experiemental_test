@@ -125,6 +125,12 @@ export type Project = {
   highlight?: string;
   /** CSS object-position for the square thumbnail crop. Defaults to center. */
   highlightPosition?: string;
+  /**
+   * Hero image is taller than it is wide. At full width such a hero becomes
+   * enormously tall, so these pages use a narrower hero column with the
+   * description set beside it instead of below.
+   */
+  heroPortrait?: boolean;
 };
 
 export const HUBS: {
@@ -267,6 +273,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "reshuffling-the-deck",
+    heroPortrait: true,
     hub: "production-scenic",
     title: "Reshuffling the Deck",
     subtitle: "Duderstadt Video Studio @ the University of Michigan",
@@ -327,6 +334,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "townhouse",
+    heroPortrait: true,
     highlight: hlTownhouse,
     highlightPosition: "50% 50%",
     hub: "architecture",
@@ -361,6 +369,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "staging-aesthetics",
+    heroPortrait: true,
     highlight: hlStaging,
     highlightPosition: "50% 55%",
     hub: "architecture",

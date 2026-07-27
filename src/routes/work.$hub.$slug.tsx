@@ -129,6 +129,7 @@ function ProjectPage() {
   const isYctiwy = project.slug === "you-cant-take-it-with-you";
   const isTrueWest = project.slug === "true-west";
   const isLollapalooza = project.slug === "lollapalooza";
+  const isPortraitHero = project.heroPortrait === true;
 
   const recordScrubWrapperRef = useRef<HTMLDivElement>(null);
   const recordScrubVideoRef = useRef<HTMLVideoElement>(null);
@@ -177,9 +178,20 @@ function ProjectPage() {
           runway. The layer is pointer-events-none so the transparent runway doesn't
           swallow clicks meant for the image; the title block re-enables them for its
           own links. The downward gradient keeps the text legible over the photo. */}
+      <div
+        className={
+          isPortraitHero
+            ? "relative md:grid md:grid-cols-[8fr_5fr] md:gap-8 lg:gap-12 md:px-12 lg:px-16"
+            : "relative"
+        }
+      >
       <div className="relative grid grid-cols-1 grid-rows-1">
         <div className="col-start-1 row-start-1 self-start z-10 pointer-events-none">
-          <div className="sticky top-16 md:top-20 px-6 md:px-12 lg:px-16 pt-10 md:pt-14 pb-16 md:pb-24 pointer-events-none bg-gradient-to-b from-black via-black/70 to-transparent">
+          <div
+            className={`sticky top-16 md:top-20 pt-10 md:pt-14 pb-16 md:pb-24 pointer-events-none bg-gradient-to-b from-black via-black/70 to-transparent ${
+              isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"
+            }`}
+          >
             {project.tags && project.tags.length > 0 && (
               <div className="mb-4 flex flex-wrap gap-2">
                 {project.tags.map((t: ProjectTag) => (
@@ -217,7 +229,11 @@ function ProjectPage() {
           <div className="h-[300px]" />
         </div>
 
-        <figure className="col-start-1 row-start-1 z-0 px-6 md:px-12 lg:px-16">
+        <figure
+          className={`col-start-1 row-start-1 z-0 ${
+            isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"
+          }`}
+        >
           <button
             type="button"
             onClick={() => setLightbox(0)}
@@ -233,6 +249,31 @@ function ProjectPage() {
             />
           </button>
         </figure>
+      </div>
+
+      {/* Portrait heroes only: description sits beside the image, filling the
+          space a tall hero leaves empty, rather than below it. Sticky so it
+          stays in view alongside the image as it scrolls. */}
+      {isPortraitHero && (
+        <aside className="px-6 md:px-0 pt-8 md:pt-14 pb-4 md:pb-0">
+          <div className="md:sticky md:top-32">
+            <p className="font-display font-light text-lg md:text-xl lg:text-2xl leading-snug tracking-tight text-balance">
+              {project.description}
+            </p>
+            {project.credits && project.credits.length > 0 && (
+              <ul className="mt-8 space-y-3">
+                {project.credits.map((c: Credit) => (
+                  <li key={c.role} className="text-sm">
+                    <span className="text-foreground/50">{c.role}</span>
+                    <br />
+                    <span className="text-foreground">{c.name}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </aside>
+      )}
       </div>
 
       {/* TaB: Renaissance — full-bleed graphic marking the black-to-white transition.
@@ -286,7 +327,9 @@ function ProjectPage() {
         </div>
       )}
 
-      {/* Description + credits */}
+      {/* Description + credits — skipped on portrait-hero pages, where both
+          already appear in the column beside the hero. */}
+      {!isPortraitHero && (
       <section className="px-6 md:px-12 lg:px-16 py-6 md:py-8 grid grid-cols-1 md:grid-cols-12 gap-6 border-b border-border">
         <div className="md:col-span-8">
           {!isYctiwy && (
@@ -311,6 +354,7 @@ function ProjectPage() {
           </RevealBlock>
         )}
       </section>
+      )}
 
       {/* Pull quote */}
       {project.pullQuote && (

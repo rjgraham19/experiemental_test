@@ -132,11 +132,6 @@
   55% { transform: scale(1.03); }
   100% { opacity: 1; transform: scale(1); }
 }
-@keyframes cellphone-rise {
-  0% { opacity: 0; transform: translateY(120px); filter: brightness(3); }
-  60% { filter: brightness(1.15); }
-  100% { opacity: 1; transform: translateY(0); filter: brightness(1); }
-}
 @keyframes twitch {
   0%, 92%, 100% { transform: translate(0,0) rotate(var(--twitch-r, 0deg)); }
   94% { transform: translate(1px, -1px) rotate(calc(var(--twitch-r, 0deg) + 0.4deg)); }
@@ -167,9 +162,6 @@
 }
 @utility animate-pop-in {
   animation: pop-in 0.9s var(--ease-cinematic) both;
-}
-@utility animate-cellphone-rise {
-  animation: cellphone-rise 1.4s var(--ease-cinematic) both;
 }
 @utility animate-twitch {
   animation: twitch 6s ease-in-out infinite;

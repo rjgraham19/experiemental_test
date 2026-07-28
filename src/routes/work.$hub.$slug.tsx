@@ -403,7 +403,9 @@ function ProjectPage() {
       {!isPortraitHero && (
       <section className="px-6 md:px-12 lg:px-16 py-6 md:py-8 grid grid-cols-1 md:grid-cols-12 gap-6 border-b border-border">
         <div className="md:col-span-8">
-          {!isYctiwy && (
+          {/* Skipped on TaB, where the description already appears alongside
+              the closeup animation higher up the page. */}
+          {!isYctiwy && !isTab && (
             <RevealBlock>
               <p className="font-display font-light text-xl md:text-3xl leading-snug tracking-tight text-balance">
                 {project.description}
@@ -525,25 +527,6 @@ function ProjectPage() {
         </>
       )}
 
-
-      {/* Special: TaB cellphone fade-up-from-white beat */}
-      {isTab && (
-        <section className="relative px-6 md:px-12 lg:px-16 py-24 md:py-32 border-b border-border bg-white text-black overflow-hidden">
-          <div className="max-w-3xl mx-auto text-center animate-cellphone-rise">
-            <div className="mx-auto w-40 h-72 md:w-56 md:h-96 rounded-[2.5rem] border-4 border-black bg-[hsl(320_60%_88%)] shadow-2xl relative overflow-hidden">
-              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-black/70 rounded-full" />
-              <div className="absolute inset-6 flex flex-col items-center justify-center text-center">
-                <p className="font-display font-black uppercase tracking-tight text-2xl md:text-3xl">TaB</p>
-                <p className="mt-2 font-serif italic text-sm md:text-base">Renaissance</p>
-                <p className="mt-6 text-[10px] tracking-[0.3em] uppercase">The Garden of<br/>Earthly Delights</p>
-              </div>
-            </div>
-            <p className="mt-8 text-xs tracking-[0.3em] uppercase text-black/60">
-              Pop-up experiential marketing moment
-            </p>
-          </div>
-        </section>
-      )}
 
       {/* Special: Staging Aesthetics — native video + philosophy cards + tilted layout */}
       {isStaging && (

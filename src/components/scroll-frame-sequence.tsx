@@ -83,13 +83,15 @@ export function ScrollFrameSequence({
 
     const tick = () => {
       const rect = wrapper.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
+      // Progress starts the moment the section's top edge appears at the
+      // bottom of the viewport, and completes as the sticky frame releases —
+      // so the sequence is already turning while the section scrolls into
+      // place, rather than waiting until it's aligned with the viewport top.
+      const travel = rect.height;
       const progress =
-        total <= 0
-          ? rect.top <= 0
-            ? 1
-            : 0
-          : Math.min(1, Math.max(0, -rect.top / total));
+        travel <= 0
+          ? 0
+          : Math.min(1, Math.max(0, (window.innerHeight - rect.top) / travel));
 
       const index = Math.min(
         frames.length - 1,

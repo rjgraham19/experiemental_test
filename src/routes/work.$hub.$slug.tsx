@@ -353,6 +353,13 @@ function ProjectPage() {
         </div>
       )}
 
+      {/* Everything past the TaB transition graphic sits in a light region:
+          that graphic's lower half is solid white, so the page is meant to
+          stay white from there down. .light-zone redefines the theme tokens
+          for this subtree, so the sections inside adapt without each needing
+          its own light styling. A no-op on every other project. */}
+      <div className={isTab ? "light-zone" : undefined}>
+
       {/* Lollapalooza — record-player scroll-scrub video, full-bleed background with text overlaid on top */}
       {isLollapalooza && (
         <div ref={recordScrubWrapperRef} className="relative w-full h-[400vh] bg-black">
@@ -700,7 +707,7 @@ function ProjectPage() {
           scrubbed by scroll so it spins forward on the way down and backward on
           the way up. Last content section on the page. */}
       {isTab && (
-        <section className="bg-black">
+        <section className="bg-background">
           <ScrollFrameSequence
             frames={TAB_SPIN_FRAMES}
             alt="TaB soda can rotating"
@@ -755,7 +762,9 @@ function ProjectPage() {
 
       <SiteFooter />
 
-      {/* Lightbox */}
+      </div>{/* end light-zone */}
+
+      {/* Lightbox — deliberately outside the light region so it stays dark. */}
       {lightbox != null && (
         <div
           className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-2xl flex flex-col cursor-zoom-out"

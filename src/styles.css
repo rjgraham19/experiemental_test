@@ -307,3 +307,31 @@
 .lolla-cursor * {
   cursor: url("/lolla-cursor.png") 0 0, auto;
 }
+
+/* Scoped light region.
+   Used on the TaB page for everything after the transition graphic, whose
+   lower half is solid white — from that point the page is meant to stay
+   white. Rather than overriding each section, this redefines the theme
+   tokens for the subtree, so existing utilities that reference them
+   (text-foreground/60, border-border, bg-secondary, and so on) resolve to
+   their light equivalents automatically. */
+.light-zone {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(0 0% 8%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(0 0% 8%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 8%);
+  --primary: hsl(0 0% 8%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(0 0% 96%);
+  --secondary-foreground: hsl(0 0% 8%);
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(0 0% 8% / 0.6);
+  --border: hsl(0 0% 8% / 0.12);
+  --input: hsl(0 0% 8% / 0.16);
+  --ash: hsl(0 0% 95%);
+
+  background-color: var(--background);
+  color: var(--foreground);
+}

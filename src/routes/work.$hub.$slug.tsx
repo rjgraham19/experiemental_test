@@ -4,6 +4,20 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { useScrollScrubVideo } from "@/hooks/use-scroll-scrub-video";
 import { AnimatedHeading, RevealBlock } from "@/components/animated-text";
+import { ScrollFrameSequence } from "@/components/scroll-frame-sequence";
+
+/**
+ * TaB can spin frames. The export intentionally kept only every other frame
+ * to halve the payload, so the numbering runs 0, 1, then odds up to 61 —
+ * hence building the list explicitly rather than by a stride.
+ */
+const TAB_SPIN_FRAMES = [
+  "/tab-spin/00000.webp",
+  ...Array.from({ length: 31 }, (_, i) => {
+    const n = i * 2 + 1; // 1, 3, 5 … 61
+    return `/tab-spin/${String(n).padStart(5, "0")}.webp`;
+  }),
+];
 import tabAnimation from "@/assets/rg/tab-animation.svg";
 import { InlineAnimatedSvg } from "@/components/inline-animated-svg";
 import {
@@ -681,6 +695,19 @@ function ProjectPage() {
       </section>
       )}
 
+
+      {/* TaB: Renaissance — closing beat. A rendered frame sequence of the can,
+          scrubbed by scroll so it spins forward on the way down and backward on
+          the way up. Last content section on the page. */}
+      {isTab && (
+        <section className="bg-black">
+          <ScrollFrameSequence
+            frames={TAB_SPIN_FRAMES}
+            alt="TaB soda can rotating"
+            className="relative h-[300vh]"
+          />
+        </section>
+      )}
 
       {/* Back to feed + next */}
       <section className="border-t border-border px-6 md:px-12 lg:px-16 py-20 grid grid-cols-1 md:grid-cols-2 gap-8">

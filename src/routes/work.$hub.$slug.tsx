@@ -5,7 +5,6 @@ import { SiteFooter } from "@/components/site-footer";
 import { useScrollScrubVideo } from "@/hooks/use-scroll-scrub-video";
 import { AnimatedHeading, RevealBlock } from "@/components/animated-text";
 import { ScrollFrameSequence } from "@/components/scroll-frame-sequence";
-import { ScrollRevealText } from "@/components/scroll-reveal-text";
 
 /**
  * TaB can spin frames. The export intentionally kept only every other frame
@@ -430,16 +429,14 @@ function ProjectPage() {
       </section>
       )}
 
-      {/* Pull quote — reveals word by word as it scrolls through the viewport.
-          Replaces the previous whole-block fade so the line resolves as you
-          read it. Reserved for pull quotes; body copy still fades as a block. */}
+      {/* Pull quote */}
       {project.pullQuote && (
         <section className="px-6 md:px-12 lg:px-16 py-8 md:py-10 border-b border-border">
-          <ScrollRevealText
-            as="blockquote"
-            text={project.pullQuote}
-            className="font-display font-light text-2xl md:text-4xl leading-snug text-balance max-w-4xl"
-          />
+          <RevealBlock>
+            <blockquote className="font-display font-light text-2xl md:text-4xl leading-snug text-balance max-w-4xl">
+              {project.pullQuote}
+            </blockquote>
+          </RevealBlock>
         </section>
       )}
 

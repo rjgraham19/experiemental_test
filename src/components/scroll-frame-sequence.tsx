@@ -55,7 +55,8 @@ export function ScrollFrameSequence({
     if (!ctx) return;
 
     let raf = 0;
-    let lastFrame = -1;
+    let smoothed: number | null = null;
+    let lastDrawn = -1;
 
     const sizeCanvas = () => {
       const first = imagesRef.current[0];
@@ -64,43 +65,70 @@ export function ScrollFrameSequence({
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
-      lastFrame = -1; // force a redraw at the new size
+      lastDrawn = -1; // force a redraw at the new size
     };
 
-    const draw = (index: number) => {
-      const img = imagesRef.current[index];
+    const paint = (img: HTMLImageElement, alpha: number) => {
       if (!img?.naturalWidth) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // contain the frame within the canvas, preserving aspect ratio
       const scale = Math.min(
         canvas.width / img.naturalWidth,
         canvas.height / img.naturalHeight,
       );
       const w = img.naturalWidth * scale;
       const h = img.naturalHeight * scale;
+      ctx.globalAlpha = alpha;
       ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+      ctx.globalAlpha = 1;
+    };
+
+    /**
+     * Draws at a fractional frame position, cross-fading the two frames
+     * either side of it. With only 32 frames spread over a long scroll each
+     * one would otherwise hold for ~75px and visibly snap; blending turns
+     * that into continuous movement.
+     */
+    const drawAt = (exact: number) => {
+      const lower = Math.floor(exact);
+      const upper = Math.min(frames.length - 1, lower + 1);
+      const blend = exact - lower;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      paint(imagesRef.current[lower], 1);
+      if (upper !== lower && blend > 0.01) {
+        paint(imagesRef.current[upper], blend);
+      }
     };
 
     const tick = () => {
       const rect = wrapper.getBoundingClientRect();
-      // Progress starts the moment the section's top edge appears at the
-      // bottom of the viewport, and completes as the sticky frame releases —
-      // so the sequence is already turning while the section scrolls into
-      // place, rather than waiting until it's aligned with the viewport top.
-      const travel = rect.height;
-      const progress =
-        travel <= 0
-          ? 0
-          : Math.min(1, Math.max(0, (window.innerHeight - rect.top) / travel));
 
-      const index = Math.min(
-        frames.length - 1,
-        Math.max(0, Math.round(progress * (frames.length - 1))),
-      );
-      if (index !== lastFrame) {
-        lastFrame = index;
-        draw(index);
+      // Skip entirely when the section is nowhere near the viewport.
+      const nearby =
+        rect.bottom > -window.innerHeight &&
+        rect.top < window.innerHeight * 2;
+
+      if (nearby) {
+        // Progress starts the moment the section's top edge appears at the
+        // bottom of the viewport, and completes as the sticky frame releases —
+        // so the sequence is already turning while the section scrolls into
+        // place, rather than waiting until it's aligned with the viewport top.
+        const travel = rect.height;
+        const target =
+          travel <= 0
+            ? 0
+            : Math.min(1, Math.max(0, (window.innerHeight - rect.top) / travel));
+
+        // Ease toward the scroll position rather than tracking it exactly, so
+        // abrupt wheel or trackpad jumps arrive as motion instead of a jolt.
+        smoothed =
+          smoothed === null ? target : smoothed + (target - smoothed) * 0.2;
+
+        const exact = smoothed * (frames.length - 1);
+        if (Math.abs(exact - lastDrawn) > 0.002) {
+          lastDrawn = exact;
+          drawAt(exact);
+        }
       }
+
       raf = requestAnimationFrame(tick);
     };
 

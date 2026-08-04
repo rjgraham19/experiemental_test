@@ -148,6 +148,14 @@ function ProjectPage() {
   const isPortraitHero = project.heroPortrait === true;
   const isTitleAbove = project.heroTitleAbove === true;
 
+  /* What the standard gallery should list. TaB gives its closeup video and
+     both halves of the PINK FOUNTAIN drawing their own sections higher up the
+     page, so only the opening contact sheet is left to show here. The original
+     index travels with each item, since that's what the lightbox counts by. */
+  const galleryMedia = project.media
+    .map((item: MediaItem, index: number) => ({ item, index }))
+    .filter(({ index }: { index: number }) => !(isTab && index !== 0));
+
   const recordScrubWrapperRef = useRef<HTMLDivElement>(null);
   const recordScrubVideoRef = useRef<HTMLVideoElement>(null);
   const [recordScrubProgress, setRecordScrubProgress] = useState(0);
@@ -420,6 +428,42 @@ function ProjectPage() {
           for this subtree, so the sections inside adapt without each needing
           its own light styling. A no-op on every other project. */}
       <div className={isTab ? "light-zone" : undefined}>
+
+      {/* TaB: Renaissance — the PINK FOUNTAIN technical drawing, directly under
+          the transition animation where the page turns white.
+
+          It's one drawing split into two files so each half can be enlarged on
+          its own, so the two must read as a single sheet rather than as two
+          images that happen to sit together. Both halves were scaled by the
+          same factor at export, so sizing the columns to their pixel widths
+          (1584 and 2400) keeps every line weight and label at one consistent
+          scale across the seam. They're top-aligned for the same reason.
+
+          The gap is wider than the drawing's own internal spacing, per Reid —
+          enough to read as two enlargeable pieces without breaking the sheet. */}
+      {isTab && (
+        <section className="px-6 md:px-12 lg:px-16 pt-10 md:pt-16 pb-8 md:pb-12">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[1584fr_2400fr] md:gap-16 lg:gap-20 md:items-start">
+            {[2, 3].map((idx) => (
+              <figure key={idx} className="group">
+                <button
+                  type="button"
+                  onClick={() => setLightbox(idx)}
+                  className="block w-full"
+                  aria-label={`Enlarge ${project.media[idx].caption}`}
+                >
+                  <img
+                    src={project.media[idx].src}
+                    alt={project.media[idx].caption ?? project.title}
+                    loading="lazy"
+                    className="w-full h-auto"
+                  />
+                </button>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Lollapalooza — record-player scroll-scrub video, full-bleed background with text overlaid on top */}
       {isLollapalooza && (
@@ -789,7 +833,7 @@ function ProjectPage() {
           </div>
         ) : (
           <div className="space-y-3 md:space-y-4">
-            {project.media.map((m: MediaItem, i: number) => (
+            {galleryMedia.map(({ item: m, index: i }) => (
               <figure
                 key={i}
                 className={`group ${

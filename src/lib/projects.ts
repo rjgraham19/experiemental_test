@@ -20,6 +20,11 @@ import reshuf from "@/assets/rg/reshuffling-full.jpg";
 import reshufView1 from "@/assets/rg/reshuffling-view1.jpg";
 import reshufView2 from "@/assets/rg/reshuffling-view2.jpg";
 import tab from "@/assets/rg/tab-full.jpg";
+// Two halves of one 8000px-wide technical drawing, exported separately so each
+// can be enlarged on its own. Both are scaled by the same factor, so placing
+// them side by side reconstructs the original at a single consistent scale.
+import tabDrawingLeft from "@/assets/rg/tab-drawing-left.jpg";
+import tabDrawingRight from "@/assets/rg/tab-drawing-right.jpg";
 import lollaClubMagenta from "@/assets/rg/lollapalooza-clubmagenta.jpg";
 
 // Square-thumbnail highlight images (full/uncropped; framed via CSS).
@@ -330,6 +335,8 @@ export const PROJECTS: Project[] = [
     media: [
       { type: "image", src: tab, caption: "Installation, branding, PINK FOUNTAIN diagram, and TaB Soda pop-up" },
       { type: "video", src: "/tab-closeup-animation.mp4" },
+      { type: "image", src: tabDrawingLeft, caption: "PINK FOUNTAIN — components and modular seating types" },
+      { type: "image", src: tabDrawingRight, caption: "PINK FOUNTAIN — exploded assembly and installation plan" },
     ],
   },
 

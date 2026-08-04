@@ -19,6 +19,7 @@ const TAB_SPIN_FRAMES = [
   }),
 ];
 import tabAnimation from "@/assets/rg/tab-animation.svg";
+import tabBanner from "@/assets/rg/tab-banner.webp";
 import { InlineAnimatedSvg } from "@/components/inline-animated-svg";
 import { InViewVideo } from "@/components/in-view-video";
 import {
@@ -888,6 +889,19 @@ function ProjectPage() {
             frames={TAB_SPIN_FRAMES}
             alt="TaB soda can rotating"
             className="relative h-[300vh]"
+            backdrop={
+              /* Event banner as a full-bleed strip behind the can. It's inside
+                 the sticky frame, so it holds still while the can turns over
+                 it. Edge to edge and vertically centred, which leaves the
+                 can — taller than the strip — overhanging above and below,
+                 and keeps it clear of the logo on the strip's left third. */
+              <img
+                src={tabBanner}
+                alt=""
+                aria-hidden
+                className="pointer-events-none absolute left-0 right-0 top-1/2 w-full -translate-y-1/2 select-none"
+              />
+            }
           />
         </section>
       )}

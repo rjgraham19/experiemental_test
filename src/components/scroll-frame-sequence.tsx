@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * A PNG/WebP frame sequence scrubbed by scroll position: scrolling down
@@ -17,10 +17,17 @@ export function ScrollFrameSequence({
   frames,
   className,
   alt,
+  backdrop,
 }: {
   frames: string[];
   className?: string;
   alt?: string;
+  /**
+   * Optional layer rendered behind the canvas inside the sticky frame. It's
+   * pinned along with the frame, so it holds still while the sequence plays
+   * over it rather than scrolling past.
+   */
+  backdrop?: ReactNode;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -144,12 +151,18 @@ export function ScrollFrameSequence({
 
   return (
     <div ref={wrapperRef} className={className}>
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center">
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        {backdrop}
         <canvas
           ref={canvasRef}
           role="img"
           aria-label={alt}
-          className="h-[80vh] w-auto max-w-full"
+          /* Taller than the viewport on purpose: the frames carry roughly 30%
+             transparent padding, so the can itself paints at about 69% of this
+             box. At full height it stands clearly proud of the banner strip
+             behind it, overhanging top and bottom the way the composition
+             calls for; the empty padding is what the frame clips. */
+          className="relative z-10 h-screen w-auto max-w-full"
         />
       </div>
     </div>

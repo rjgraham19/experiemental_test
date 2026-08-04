@@ -143,6 +143,7 @@ function ProjectPage() {
   const isYctiwy = project.slug === "you-cant-take-it-with-you";
   const isTrueWest = project.slug === "true-west";
   const isAnneFrank = project.slug === "the-diary-of-anne-frank";
+  const isReshuffling = project.slug === "reshuffling-the-deck";
   const isLollapalooza = project.slug === "lollapalooza";
   const isPortraitHero = project.heroPortrait === true;
   const isTitleAbove = project.heroTitleAbove === true;
@@ -261,7 +262,11 @@ function ProjectPage() {
         <figure
           className={`z-0 ${
             isTitleAbove ? "relative -mt-[300px]" : "col-start-1 row-start-1"
-          } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"}`}
+          } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"} ${
+            /* nudged down so the title clears more of the composition and the
+               stacked views alongside sit within the page rather than above it */
+            isReshuffling ? "mt-10 md:mt-24" : ""
+          }`}
         >
           <button
             type="button"
@@ -278,6 +283,22 @@ function ProjectPage() {
             />
           </button>
         </figure>
+
+        {/* Reshuffling: credits sit under the hero on the left, since the
+            description moves across to sit beneath the stacked views. */}
+        {isReshuffling && project.credits && project.credits.length > 0 && (
+          <div className="col-start-1 px-6 md:px-0 mt-6 md:mt-8">
+            <ul className="space-y-3">
+              {project.credits.map((c: Credit) => (
+                <li key={c.role} className="text-sm">
+                  <span className="text-foreground/50">{c.role}</span>
+                  <br />
+                  <span className="text-foreground">{c.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Portrait heroes only: description sits beside the image, filling the
@@ -285,22 +306,56 @@ function ProjectPage() {
           stays in view alongside the image as it scrolls. */}
       {isPortraitHero && (
         <aside className="px-6 md:px-0 pt-8 md:pt-14 pb-4 md:pb-0">
-          <div className="md:sticky md:top-32">
-            <p className="font-display font-light text-lg md:text-xl lg:text-2xl leading-snug tracking-tight text-balance">
-              {project.description}
-            </p>
-            {project.credits && project.credits.length > 0 && (
-              <ul className="mt-8 space-y-3">
-                {project.credits.map((c: Credit) => (
-                  <li key={c.role} className="text-sm">
-                    <span className="text-foreground/50">{c.role}</span>
-                    <br />
-                    <span className="text-foreground">{c.name}</span>
-                  </li>
+          {isReshuffling ? (
+            /* Reshuffling: the two painted backdrops stack here, sized well
+               under full width, with the description beneath them. Bottom
+               aligned so the pair finishes roughly level with the hero.
+               Each view stays independently clickable. */
+            <div className="md:flex md:h-full md:flex-col md:justify-end">
+              <div className="space-y-4 md:space-y-6">
+                {[1, 2].map((idx) => (
+                  <figure key={idx} className="group">
+                    <button
+                      type="button"
+                      onClick={() => setLightbox(idx)}
+                      className="block w-full overflow-hidden rounded-md bg-secondary"
+                      aria-label={project.media[idx].caption ?? `View ${idx}`}
+                    >
+                      <img
+                        src={project.media[idx].src}
+                        alt={project.media[idx].caption ?? project.title}
+                        loading="lazy"
+                        className="w-full h-auto object-cover animate-image-fade group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+                      />
+                    </button>
+                  </figure>
                 ))}
-              </ul>
-            )}
-          </div>
+              </div>
+
+              <RevealBlock>
+                <p className="mt-6 md:mt-8 font-display font-light text-base md:text-lg leading-snug tracking-tight text-balance md:text-right">
+                  {project.description}
+                </p>
+              </RevealBlock>
+            </div>
+          ) : (
+            <div className="md:sticky md:top-32">
+              <p className="font-display font-light text-lg md:text-xl lg:text-2xl leading-snug tracking-tight text-balance">
+                {project.description}
+              </p>
+              {project.credits && project.credits.length > 0 && (
+                <ul className="mt-8 space-y-3">
+                  {project.credits.map((c: Credit) => (
+                    <li key={c.role} className="text-sm">
+                      <span className="text-foreground/50">{c.role}</span>
+                      <br />
+                      <span className="text-foreground">{c.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </aside>
       )}
       </div>
@@ -590,7 +645,9 @@ function ProjectPage() {
       )}
 
       {/* Media gallery */}
-      {!isTrueWest && (
+      {/* Skipped where every media item already appears in a bespoke layout
+          above, which would otherwise repeat the whole set. */}
+      {!isTrueWest && !isReshuffling && (
       <section className="px-6 md:px-12 lg:px-16 py-8 md:py-10">
         {isAnneFrank ? (
           /* Anne Frank layout, per the supplied reference:

@@ -17,6 +17,8 @@ import anneSketch from "@/assets/rg/anne-frank-sketch.webp";
 import anneDrawingLeft from "@/assets/rg/anne-frank-drawing-left.webp";
 import anneDrawingRight from "@/assets/rg/anne-frank-drawing-right.webp";
 import reshuf from "@/assets/rg/reshuffling-full.jpg";
+import reshufView1 from "@/assets/rg/reshuffling-view1.jpg";
+import reshufView2 from "@/assets/rg/reshuffling-view2.jpg";
 import tab from "@/assets/rg/tab-full.jpg";
 import lollaClubMagenta from "@/assets/rg/lollapalooza-clubmagenta.jpg";
 
@@ -303,6 +305,8 @@ export const PROJECTS: Project[] = [
     tags: ["Production/Scenic", "Experiential"],
     media: [
       { type: "image", src: reshuf, caption: "On-set: virtual production stage with painted flats and camera rig" },
+      { type: "image", src: reshufView1, caption: "Painted backdrop — colonnade receding to a vanishing point" },
+      { type: "image", src: reshufView2, caption: "Painted backdrop — river landscape" },
     ],
   },
   {

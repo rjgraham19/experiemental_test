@@ -231,18 +231,7 @@ function ProjectPage() {
           }
         >
           <div
-            className={`sticky top-16 md:top-20 pt-10 md:pt-14 ${
-              /* TaB's hero is pulled up far enough that the title sits on the
-                 image rather than above it, so the scrim has to carry the
-                 white text on its own. A TaB-blue ombre instead of the usual
-                 black one: it starts at black so there's no seam against the
-                 page above, deepens through the brand blue behind the title,
-                 and fades out over the image. Stays dark enough through the
-                 subtitle for white to hold contrast before it releases. */
-              isTab
-                ? "bg-[linear-gradient(to_bottom,#000_0%,#062F52_30%,#0A4E82_58%,#1272AE_82%,rgba(18,114,174,0)_100%)]"
-                : "bg-gradient-to-b from-black via-black/70 to-transparent"
-            } ${
+            className={`sticky top-16 md:top-20 pt-10 md:pt-14 bg-gradient-to-b from-black via-black/70 to-transparent ${
               isTitleAbove ? "pb-8 md:pb-10" : "pb-16 md:pb-24 pointer-events-none"
             } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"}`}
           >
@@ -266,13 +255,7 @@ function ProjectPage() {
               className="font-display font-black uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(2rem,11vw,3rem)] md:text-[clamp(3rem,8.5vw,6rem)] text-balance max-w-5xl"
             />
 
-            {/* Brighter on TaB: the subtitle lands near the bottom of the blue
-                scrim, where 50% white would wash out against it. */}
-            <p
-              className={`mt-4 text-[10px] tracking-[0.3em] uppercase ${
-                isTab ? "text-foreground/85" : "text-foreground/50"
-              }`}
-            >
+            <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-foreground/50">
               {project.subtitle}
             </p>
 

@@ -142,6 +142,7 @@ function ProjectPage() {
   const isTab = project.slug === "tab-renaissance";
   const isYctiwy = project.slug === "you-cant-take-it-with-you";
   const isTrueWest = project.slug === "true-west";
+  const isAnneFrank = project.slug === "the-diary-of-anne-frank";
   const isLollapalooza = project.slug === "lollapalooza";
   const isPortraitHero = project.heroPortrait === true;
   const isTitleAbove = project.heroTitleAbove === true;
@@ -405,7 +406,7 @@ function ProjectPage() {
         <div className="md:col-span-8">
           {/* Skipped on TaB, where the description already appears alongside
               the closeup animation higher up the page. */}
-          {!isYctiwy && !isTab && (
+          {!isYctiwy && !isTab && !isAnneFrank && (
             <RevealBlock>
               <p className="font-display font-light text-xl md:text-3xl leading-snug tracking-tight text-balance">
                 {project.description}
@@ -591,7 +592,83 @@ function ProjectPage() {
       {/* Media gallery */}
       {!isTrueWest && (
       <section className="px-6 md:px-12 lg:px-16 py-8 md:py-10">
-        {isYctiwy ? (
+        {isAnneFrank ? (
+          /* Anne Frank layout, per the supplied reference:
+             upper band — conceptual sketch left (sitting higher), kitchen
+             closeup right (dropped lower), with the description tucked under
+             the sketch and to the left of the photo. Lower band — the two
+             technical drawings side by side, each independently clickable but
+             sharing a row so they read as a matched pair. */
+          <div className="space-y-10 md:space-y-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-14 md:items-start">
+              {/* Left: sketch, then the description beneath it */}
+              <div className="md:pt-4">
+                <figure className="group">
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(1)}
+                    className="block w-full overflow-hidden rounded-md"
+                    aria-label={project.media[1].caption ?? "Conceptual sketch"}
+                  >
+                    <img
+                      src={project.media[1].src}
+                      alt={project.media[1].caption ?? project.title}
+                      loading="lazy"
+                      className="w-full h-auto object-contain animate-image-fade group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+                    />
+                  </button>
+                </figure>
+
+                <RevealBlock>
+                  <p className="mt-6 md:mt-8 font-display font-light text-base md:text-lg leading-relaxed text-balance text-foreground/85 md:max-w-sm md:ml-auto md:text-right">
+                    {project.description}
+                  </p>
+                </RevealBlock>
+              </div>
+
+              {/* Right: kitchen closeup, dropped lower than the sketch */}
+              <figure className="group md:mt-24 lg:mt-32">
+                <button
+                  type="button"
+                  onClick={() => setLightbox(2)}
+                  className="block w-full overflow-hidden rounded-md bg-secondary"
+                  aria-label={project.media[2].caption ?? "Set closeup"}
+                >
+                  <img
+                    src={project.media[2].src}
+                    alt={project.media[2].caption ?? project.title}
+                    loading="lazy"
+                    className="w-full h-auto object-cover animate-image-fade group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+                  />
+                </button>
+              </figure>
+            </div>
+
+            {/* Technical drawings — separate images so each opens on its own,
+                but placed in one row with tops aligned so they read parallel.
+                Their source ratios differ slightly (1.97 vs 2.09), so heights
+                won't match exactly; alignment is to the top edge. */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 md:items-start">
+              {[3, 4].map((idx) => (
+                <figure key={idx} className="group">
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(idx)}
+                    className="block w-full overflow-hidden rounded-md"
+                    aria-label={project.media[idx].caption ?? `Technical drawing ${idx - 2}`}
+                  >
+                    <img
+                      src={project.media[idx].src}
+                      alt={project.media[idx].caption ?? project.title}
+                      loading="lazy"
+                      className="w-full h-auto object-contain animate-image-fade group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+                    />
+                  </button>
+                </figure>
+              ))}
+            </div>
+          </div>
+        ) : isYctiwy ? (
           // Custom YCTIWU layout: closeup (left) + sketch (top-right, on dark) + drawing (bottom-right)
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {/* Closeup, left column */}

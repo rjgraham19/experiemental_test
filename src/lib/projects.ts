@@ -13,6 +13,9 @@ import trueWestRender2 from "@/assets/rg/true-west-render2.jpg";
 import trueWestDiagram from "@/assets/rg/true-west-diagram.png";
 import anne from "@/assets/rg/anne-frank-full.jpg";
 import anneDet from "@/assets/rg/anne-frank-detail.jpg";
+import anneSketch from "@/assets/rg/anne-frank-sketch.webp";
+import anneDrawingLeft from "@/assets/rg/anne-frank-drawing-left.webp";
+import anneDrawingRight from "@/assets/rg/anne-frank-drawing-right.webp";
 import reshuf from "@/assets/rg/reshuffling-full.jpg";
 import tab from "@/assets/rg/tab-full.jpg";
 import lollaClubMagenta from "@/assets/rg/lollapalooza-clubmagenta.jpg";
@@ -273,9 +276,13 @@ export const PROJECTS: Project[] = [
     notes: ["Conceptual sketch by Reid Graham."],
     cover: anne,
     collage: [anneDet],
+    // Order matters: the custom layout on this page addresses these by index.
     media: [
       { type: "image", src: anne, caption: "Full attic set — skeletal framing over the annex" },
-      { type: "image", src: anneDet, caption: "Kitchen detail with conceptual sketch, elevations and ground plan" },
+      { type: "image", src: anneSketch, caption: "Conceptual sketch by Reid Graham" },
+      { type: "image", src: anneDet, caption: "Kitchen detail — stove, sink and stacked slatting" },
+      { type: "image", src: anneDrawingLeft, caption: "Section — skeletal framing and stair" },
+      { type: "image", src: anneDrawingRight, caption: "Ground plan" },
     ],
   },
   {

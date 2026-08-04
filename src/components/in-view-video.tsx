@@ -13,9 +13,16 @@ import { useEffect, useRef } from "react";
 export function InViewVideo({
   src,
   className,
+  playOnce = false,
 }: {
   src: string;
   className?: string;
+  /**
+   * Run the clip a single time, the first time it's scrolled into view, and
+   * then leave it resting on its final frame — so it reads as a still image
+   * that animated once, rather than a video on a loop.
+   */
+  playOnce?: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -31,7 +38,10 @@ export function InViewVideo({
           void video.play().catch(() => {
             /* autoplay refused — leave it on its first frame */
           });
-        } else {
+          // Stop watching after the first play, so scrolling back past it
+          // doesn't restart the animation.
+          if (playOnce) observer.disconnect();
+        } else if (!playOnce) {
           video.pause();
         }
       },
@@ -40,16 +50,18 @@ export function InViewVideo({
 
     observer.observe(video);
     return () => observer.disconnect();
-  }, []);
+  }, [playOnce]);
 
   return (
     <video
       ref={videoRef}
       src={src}
       muted
-      loop
+      loop={!playOnce}
       playsInline
-      preload="metadata"
+      // Fully buffered ahead of time for the one-shot case: it gets a single
+      // chance to play, so it shouldn't stall partway through.
+      preload={playOnce ? "auto" : "metadata"}
       className={className}
     />
   );

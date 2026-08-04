@@ -20,6 +20,7 @@ const TAB_SPIN_FRAMES = [
 ];
 import tabAnimation from "@/assets/rg/tab-animation.svg";
 import { InlineAnimatedSvg } from "@/components/inline-animated-svg";
+import { InViewVideo } from "@/components/in-view-video";
 import {
   HUBS,
   PROJECTS,
@@ -375,8 +376,10 @@ function ProjectPage() {
 
       {/* TaB: Renaissance — closeup animation, directly under the hero.
           Presented as a moving image rather than an embedded video: no
-          controls, no play badge, no poster affordance. Clicking opens it in
-          the lightbox like any other media on the page, where it plays. */}
+          controls, no play badge, no poster affordance. It runs once when
+          scrolled into view and then holds on its last frame, so for most of
+          the time on screen it simply reads as a still. Clicking opens it in
+          the lightbox like any other media on the page. */}
       {isTab && (
         <section className="px-6 md:px-12 lg:px-16 py-8 md:py-10">
           <div className="md:grid md:grid-cols-[1fr_1fr] md:gap-8 lg:gap-12 md:items-center">
@@ -384,15 +387,12 @@ function ProjectPage() {
               <button
                 type="button"
                 onClick={() => setLightbox(1)}
-                className="block w-full overflow-hidden rounded-md bg-secondary"
+                className="block w-full overflow-hidden rounded-md bg-secondary md:max-w-[92%]"
                 aria-label="Enlarge TaB closeup animation"
               >
-                <video
+                <InViewVideo
                   src="/tab-closeup-animation.mp4"
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
+                  playOnce
                   className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
                 />
               </button>

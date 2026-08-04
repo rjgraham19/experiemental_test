@@ -209,7 +209,11 @@ function ProjectPage() {
             : "relative"
         }
       >
-      <div className={isTitleAbove ? "relative" : "relative grid grid-cols-1 grid-rows-1"}>
+      <div
+        className={`${
+          isTitleAbove ? "relative" : "relative grid grid-cols-1 grid-rows-1"
+        } ${isReshuffling ? "md:col-start-1 md:row-start-1" : ""}`}
+      >
         <div
           className={
             isTitleAbove
@@ -284,11 +288,49 @@ function ProjectPage() {
           </button>
         </figure>
 
-        {/* Reshuffling: credits sit under the hero on the left, since the
-            description moves across to sit beneath the stacked views. */}
-        {isReshuffling && project.credits && project.credits.length > 0 && (
-          <div className="col-start-1 px-6 md:px-0 mt-6 md:mt-8">
-            <ul className="space-y-3">
+      </div>
+
+      {/* Portrait heroes only: description sits beside the image, filling the
+          space a tall hero leaves empty, rather than below it. Sticky so it
+          stays in view alongside the image as it scrolls. */}
+      {/* Reshuffling occupies all four cells of the two-column grid rather
+          than a hero-plus-aside pair: hero and stacked views share row 1,
+          credits and description share row 2. Putting both text blocks in
+          the same grid row is what keeps them starting on the same line —
+          they'd otherwise be sized by their own columns and drift apart.
+          The views are self-end so the pair finishes level with the hero.
+          DOM order is the mobile reading order; desktop placement is
+          explicit, so the two are free to differ. */}
+      {isReshuffling && (
+        <>
+          <div className="px-6 md:px-0 pt-8 md:pt-0 space-y-4 md:space-y-6 md:col-start-2 md:row-start-1 md:self-end">
+            {[1, 2].map((idx) => (
+              <figure key={idx} className="group">
+                <button
+                  type="button"
+                  onClick={() => setLightbox(idx)}
+                  className="block w-full overflow-hidden rounded-md bg-secondary"
+                  aria-label={project.media[idx].caption ?? `View ${idx}`}
+                >
+                  <img
+                    src={project.media[idx].src}
+                    alt={project.media[idx].caption ?? project.title}
+                    loading="lazy"
+                    className="w-full h-auto object-cover animate-image-fade group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
+                  />
+                </button>
+              </figure>
+            ))}
+          </div>
+
+          <RevealBlock className="px-6 md:px-0 mt-6 md:mt-0 md:col-start-2 md:row-start-2">
+            <p className="font-display font-light text-base md:text-lg leading-snug tracking-tight text-balance md:text-right">
+              {project.description}
+            </p>
+          </RevealBlock>
+
+          {project.credits && project.credits.length > 0 && (
+            <ul className="px-6 md:px-0 mt-8 md:mt-0 space-y-3 md:col-start-1 md:row-start-2">
               {project.credits.map((c: Credit) => (
                 <li key={c.role} className="text-sm">
                   <span className="text-foreground/50">{c.role}</span>
@@ -297,65 +339,28 @@ function ProjectPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        )}
-      </div>
-
-      {/* Portrait heroes only: description sits beside the image, filling the
-          space a tall hero leaves empty, rather than below it. Sticky so it
-          stays in view alongside the image as it scrolls. */}
-      {isPortraitHero && (
-        <aside className="px-6 md:px-0 pt-8 md:pt-14 pb-4 md:pb-0">
-          {isReshuffling ? (
-            /* Reshuffling: the two painted backdrops stack here, sized well
-               under full width, with the description beneath them. Bottom
-               aligned so the pair finishes roughly level with the hero.
-               Each view stays independently clickable. */
-            <div className="md:flex md:h-full md:flex-col md:justify-end">
-              <div className="space-y-4 md:space-y-6">
-                {[1, 2].map((idx) => (
-                  <figure key={idx} className="group">
-                    <button
-                      type="button"
-                      onClick={() => setLightbox(idx)}
-                      className="block w-full overflow-hidden rounded-md bg-secondary"
-                      aria-label={project.media[idx].caption ?? `View ${idx}`}
-                    >
-                      <img
-                        src={project.media[idx].src}
-                        alt={project.media[idx].caption ?? project.title}
-                        loading="lazy"
-                        className="w-full h-auto object-cover animate-image-fade group-hover:scale-[1.01] transition-transform duration-700 ease-cinematic"
-                      />
-                    </button>
-                  </figure>
-                ))}
-              </div>
-
-              <RevealBlock>
-                <p className="mt-6 md:mt-8 font-display font-light text-base md:text-lg leading-snug tracking-tight text-balance md:text-right">
-                  {project.description}
-                </p>
-              </RevealBlock>
-            </div>
-          ) : (
-            <div className="md:sticky md:top-32">
-              <p className="font-display font-light text-lg md:text-xl lg:text-2xl leading-snug tracking-tight text-balance">
-                {project.description}
-              </p>
-              {project.credits && project.credits.length > 0 && (
-                <ul className="mt-8 space-y-3">
-                  {project.credits.map((c: Credit) => (
-                    <li key={c.role} className="text-sm">
-                      <span className="text-foreground/50">{c.role}</span>
-                      <br />
-                      <span className="text-foreground">{c.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
           )}
+        </>
+      )}
+
+      {isPortraitHero && !isReshuffling && (
+        <aside className="px-6 md:px-0 pt-8 md:pt-14 pb-4 md:pb-0">
+          <div className="md:sticky md:top-32">
+            <p className="font-display font-light text-lg md:text-xl lg:text-2xl leading-snug tracking-tight text-balance">
+              {project.description}
+            </p>
+            {project.credits && project.credits.length > 0 && (
+              <ul className="mt-8 space-y-3">
+                {project.credits.map((c: Credit) => (
+                  <li key={c.role} className="text-sm">
+                    <span className="text-foreground/50">{c.role}</span>
+                    <br />
+                    <span className="text-foreground">{c.name}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </aside>
       )}
       </div>

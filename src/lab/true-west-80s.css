@@ -24,15 +24,25 @@
   --ad-wood: #5c3a1e;
   --ad-wood-deep: #3d2513;
 
-  --sans-ad: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  /* Free stand-ins for the licensed faces adreform.com runs on — which is
+     where that site's period feel actually comes from, not its layout.
+     Oswald descends from Alternate Gothic, the condensed American ad gothic;
+     Jost is a Futura geometric standing in for ITC Avant Garde, the face
+     that dates a page to the seventies faster than anything else. */
+  --gothic-ad: "Oswald", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --geo-ad: "Jost", "Century Gothic", "Futura", sans-serif;
   --serif-ad: "Tinos", "Times New Roman", Times, serif;
+
+  /* Halftone cell size. 3px reads as newsprint at 1x; the screen is scaled
+     up on the photographs so the dots stay visible over image detail. */
+  --dot: 3px;
 
   position: relative;
   background-color: var(--ad-black);
   color: var(--ad-white);
   font-family: var(--serif-ad);
-  font-size: 1.02rem;
-  line-height: 1.34;
+  font-size: 0.92rem;
+  line-height: 1.22;
 }
 
 /* Halftone tooth. Period ads were printed coarse on cheap magazine stock;
@@ -59,12 +69,11 @@
    sentence running the full measure, which is what gives it the pitchman
    cadence. Condensed and tight so it fills the line edge to edge. */
 .tw80-headline {
-  font-family: var(--sans-ad);
+  font-family: var(--gothic-ad);
   font-weight: 700;
-  font-stretch: 75%;
   line-height: 0.98;
   letter-spacing: -0.018em;
-  font-size: clamp(1.9rem, 5.1vw, 4rem);
+  font-size: clamp(2.1rem, 5.8vw, 4.6rem);
   text-align: center;
   text-wrap: balance;
 }
@@ -102,7 +111,7 @@
    is a gradient rather than a texture image so it costs nothing and still
    reads as grain at a glance. */
 .tw80-frame {
-  padding: 0.5rem;
+  padding: 0.18rem;
   background-image: linear-gradient(
     100deg,
     var(--ad-wood-deep),
@@ -117,16 +126,38 @@
   width: 100%;
   height: auto;
   border: 1px solid #00000055;
-  /* Warmed and knocked back: period four-colour printing never held clean
-     neutrals, and matching that is what stops the photographs reading as
-     modern images sitting on a retro background. */
-  filter: sepia(0.22) saturate(0.9) contrast(1.06) brightness(0.97);
+  /* Contrast pushed hard before the screen goes over it. A halftone works by
+     throwing away midtones, so a photograph that still has a full modern
+     tonal range underneath will read as a photo with dots on top rather than
+     as something actually printed. */
+  filter: sepia(0.28) saturate(0.82) contrast(1.34) brightness(0.94);
+}
+
+/* The halftone itself: a dot screen laid over each photograph.
+   Two gradients offset by half a cell give the staggered rosette of a real
+   screen rather than a square grid, and multiply keeps the dots reading as
+   ink sitting in the image's own shadows instead of grey confetti on top. */
+.tw80-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+.tw80-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(circle at 25% 25%, #000 0.7px, transparent 0.9px),
+    radial-gradient(circle at 75% 75%, #000 0.7px, transparent 0.9px);
+  background-size: var(--dot) var(--dot);
 }
 
 .tw80-caption {
-  font-family: var(--sans-ad);
+  font-family: var(--geo-ad);
   font-weight: 700;
-  font-stretch: 87.5%;
   font-size: 0.66rem;
   letter-spacing: 0.06em;
   color: var(--ad-gold);
@@ -141,7 +172,7 @@
 }
 
 .tw80-label {
-  font-family: var(--sans-ad);
+  font-family: var(--geo-ad);
   font-weight: 700;
   font-size: 0.6rem;
   letter-spacing: 0.24em;
@@ -154,9 +185,8 @@
 /* "GENERAL (GE) ELECTRIC" — heavy caps, wide tracking, a device between the
    words. Here the play title takes the same shape. */
 .tw80-lockup {
-  font-family: var(--sans-ad);
+  font-family: var(--geo-ad);
   font-weight: 700;
-  font-stretch: 87.5%;
   font-size: clamp(1.3rem, 3.6vw, 2.5rem);
   letter-spacing: 0.1em;
   text-transform: uppercase;

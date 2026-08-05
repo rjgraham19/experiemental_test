@@ -31,10 +31,12 @@ export const Route = createFileRoute("/lab")({
     links: [
       {
         rel: "stylesheet",
-        // Archivo carries a real width axis, so the headline can be genuinely
-        // condensed rather than squashed; Tinos is Times-metric, which is the
-        // serif the reference's ad copy is actually set in.
-        href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75,700;87.5,700&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap",
+        // Free stand-ins for the licensed faces adreform.com uses, which is
+        // where its period feel comes from: Oswald descends from Alternate
+        // Gothic (its condensed ad-gothic headlines), Jost is the Futura
+        // geometric that stands in for ITC Avant Garde, and Tinos is
+        // Times-metric for the ad copy itself.
+        href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@400;500;700&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap",
       },
     ],
   }),

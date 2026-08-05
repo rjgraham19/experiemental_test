@@ -17,8 +17,12 @@
  */
 
 .tw80 {
-  --ad-black: #050505;
-  --ad-white: #f4f1e8;
+  /* Not pure black — printed black on coated stock never is, and #050505
+     reads as a screen. */
+  --ad-black: #171411;
+  /* Print white: warm and slightly tan, the way white ink sits on aged
+     magazine stock. Pure white would give the whole page away. */
+  --ad-white: #f1ead5;
   --ad-gold: #e0a92b;
   --ad-gold-deep: #b8801a;
   --ad-wood: #5c3a1e;
@@ -41,7 +45,14 @@
   --dot: 3px;
 
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background-color: var(--ad-black);
+  /* Two very low-opacity washes — a warm brown and a cool paper highlight —
+     so the ground is unevenly inked rather than a flat fill. */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(101, 77, 48, 0.09), transparent 38%),
+    radial-gradient(circle at 78% 65%, rgba(241, 234, 213, 0.035), transparent 42%);
   color: var(--ad-white);
   font-family: var(--serif-ad);
   /* Libre Baskerville runs large on the body for its size, so this sits a
@@ -50,17 +61,19 @@
   line-height: 1.45;
 }
 
-/* Halftone tooth. Period ads were printed coarse on cheap magazine stock;
-   a faint dot screen keeps the black from reading as a modern flat fill. */
-.tw80::before {
+/* Fine uneven ink grain, over the whole page including the photographs.
+   Fractal noise rather than a dot grid, at soft-light so it modulates what's
+   underneath instead of greying it — the goal is stock that took ink
+   unevenly, not a distressed texture laid on top. */
+.tw80::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 10;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.55;
-  background-image: radial-gradient(#ffffff0d 0.5px, transparent 0.6px);
-  background-size: 3px 3px;
+  opacity: 0.13;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.45'/%3E%3C/svg%3E");
 }
 
 .tw80 > * {
@@ -136,20 +149,20 @@
   width: 100%;
   height: auto;
   border: 1px solid #00000055;
-  /* Contrast pushed hard before the screen goes over it. A halftone works by
-     throwing away midtones, so a photograph that still has a full modern
-     tonal range underneath will read as a photo with dots on top rather than
-     as something actually printed. */
-  filter: sepia(0.28) saturate(0.82) contrast(1.34) brightness(0.94);
+  /* Barely touched. The previous heavy sepia and 1.34 contrast were crushing
+     the photographs to sell the screen; the screen is subtle enough now that
+     the images can keep their own tonality. */
+  filter: saturate(0.88) contrast(0.97);
 }
 
-/* The halftone itself: a dot screen laid over each photograph.
-   Two gradients offset by half a cell give the staggered rosette of a real
-   screen rather than a square grid, and multiply keeps the dots reading as
-   ink sitting in the image's own shadows instead of grey confetti on top. */
+/* The halftone screen over each photograph — present but not obscuring.
+   At 0.09 it reads as tooth in the print rather than as an effect, which is
+   the difference between a photograph that was printed and a photograph with
+   dots on it. Multiply keeps the ink in the image's own shadows. */
 .tw80-frame {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
 
 .tw80-frame::after {
@@ -158,10 +171,12 @@
   inset: 0;
   pointer-events: none;
   mix-blend-mode: multiply;
-  opacity: 0.55;
-  background-image:
-    radial-gradient(circle at 25% 25%, #000 0.7px, transparent 0.9px),
-    radial-gradient(circle at 75% 75%, #000 0.7px, transparent 0.9px);
+  opacity: 0.09;
+  background-image: radial-gradient(
+    circle,
+    rgba(25, 20, 16, 0.65) 0.45px,
+    transparent 0.6px
+  );
   background-size: var(--dot) var(--dot);
 }
 

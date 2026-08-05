@@ -48,11 +48,21 @@
   isolation: isolate;
   overflow: hidden;
   background-color: var(--ad-black);
-  /* Two very low-opacity washes — a warm brown and a cool paper highlight —
-     so the ground is unevenly inked rather than a flat fill. */
+  /* A photograph of black paper as the ground, with the two low-opacity
+     washes layered over it. Listed first paints on top, so the texture is the
+     bottom layer.
+
+     cover rather than repeat: it's a photograph of one sheet, so tiling would
+     show its seams. Scaled to the whole scrolling page, which reads as the
+     page being printed on a single piece of stock. The source was 9.7MB, so
+     it's downscaled and converted to WebP — 128KB. */
   background-image:
     radial-gradient(circle at 20% 30%, rgba(101, 77, 48, 0.09), transparent 38%),
-    radial-gradient(circle at 78% 65%, rgba(241, 234, 213, 0.035), transparent 42%);
+    radial-gradient(circle at 78% 65%, rgba(241, 234, 213, 0.035), transparent 42%),
+    url("../assets/rg/true-west-paper.webp");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
   color: var(--ad-white);
   font-family: var(--serif-ad);
   /* Libre Baskerville runs large on the body for its size, so this sits a

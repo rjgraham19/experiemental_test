@@ -31,11 +31,11 @@ export const Route = createFileRoute("/lab")({
     links: [
       {
         rel: "stylesheet",
-        // Oswald descends from Alternate Gothic, the condensed ad gothic in
-        // adreform's stack; Tinos is Times-metric for the ad copy. The
-        // geometric role is Poppins, already loaded site-wide, standing in
-        // for ITC Avant Garde — so it isn't requested again here.
-        href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap",
+        // Caprasimo for headlines and oversized statements, Libre Baskerville
+        // for descriptions and captions, per Reid's brief. Technical labels
+        // stay on Poppins, which is already loaded site-wide — the one
+        // exception the brief allows, and it costs no extra request.
+        href: "https://fonts.googleapis.com/css2?family=Caprasimo&family=Libre+Baskerville:wght@400;700&display=swap",
       },
     ],
   }),

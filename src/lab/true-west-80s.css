@@ -5,9 +5,9 @@
  * editorial spread the brief first suggested. It is:
  *
  *   • black ground, white type — not paper
- *   • a heavy CONDENSED SANS headline in sentence case, tightly tracked
- *   • Times-like serif ad copy in narrow justified columns, first line
- *     indented, no drop cap
+ *   • an oversized fat-face headline in sentence case, tightly tracked
+ *   • serif ad copy in narrow justified columns, first line indented,
+ *     no drop cap
  *   • harvest gold rules and picture frames over wood-brown mats
  *   • a spaced-capitals brand lockup closing the page
  *
@@ -24,18 +24,17 @@
   --ad-wood: #5c3a1e;
   --ad-wood-deep: #3d2513;
 
-  /* Free stand-ins for the licensed faces adreform.com runs on — which is
-     where that site's period feel actually comes from, not its layout.
-     Oswald descends from Alternate Gothic, the condensed American ad gothic;
-     Jost is a Futura geometric standing in for ITC Avant Garde, the face
-     that dates a page to the seventies faster than anything else. */
-  --gothic-ad: "Oswald", "Haettenschweiler", "Arial Narrow", sans-serif;
-  /* Poppins stands in for ITC Avant Garde Gothic — the face both of Reid's
-     retro references run on. Closer than Futura: same circular geometry and
-     single-storey a, and a large x-height where Futura's is small. It is
-     already loaded site-wide, so it also costs nothing here. */
+  /* Caprasimo — hero titles, oversized statements, major section headlines.
+     A fat face with almost no internal counter space, which is exactly the
+     graphic weight vintage appliance advertising ran its headlines at. */
+  --display-ad: "Caprasimo", Georgia, serif;
+
+  /* Libre Baskerville — descriptions, captions, supporting editorial copy. */
+  --serif-ad: "Libre Baskerville", Georgia, serif;
+
+  /* Technical labels only. Poppins is already loaded site-wide, so this is
+     the one extra face and it costs no additional request. */
   --geo-ad: "Poppins", "Century Gothic", sans-serif;
-  --serif-ad: "Tinos", "Times New Roman", Times, serif;
 
   /* Halftone cell size. 3px reads as newsprint at 1x; the screen is scaled
      up on the photographs so the dots stay visible over image detail. */
@@ -45,8 +44,10 @@
   background-color: var(--ad-black);
   color: var(--ad-white);
   font-family: var(--serif-ad);
-  font-size: 0.92rem;
-  line-height: 1.22;
+  /* Libre Baskerville runs large on the body for its size, so this sits a
+     step below the previous Times setting to keep the copy compact. */
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
 /* Halftone tooth. Period ads were printed coarse on cheap magazine stock;
@@ -71,13 +72,14 @@
 
 /* Sentence case, not caps — the reference sets its headline as a spoken
    sentence running the full measure, which is what gives it the pitchman
-   cadence. Condensed and tight so it fills the line edge to edge. */
+   cadence. Set large and tight so it reads as graphic rather than as text:
+   Caprasimo has almost no counter space, so it only works at size. */
 .tw80-headline {
-  font-family: var(--gothic-ad);
-  font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.018em;
-  font-size: clamp(2.1rem, 5.8vw, 4.6rem);
+  font-family: var(--display-ad);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  font-size: clamp(2.3rem, 6.4vw, 5.2rem);
   text-align: center;
   text-wrap: balance;
 }
@@ -93,20 +95,24 @@
 
 /* ── Ad copy ──────────────────────────────────────────────────────── */
 
-.tw80-copy p {
-  text-align: justify;
-  hyphens: auto;
+/* The lead description. Narrow measure and a slightly tight line-height so
+   it reads as compact magazine copy — Baskerville's wide set would otherwise
+   run to a line length no printed page of this kind ever used. */
+.tw80-copy-lead {
+  max-width: 46ch;
+  font-size: 0.95rem;
+  line-height: 1.45;
   margin: 0;
 }
 
-/* Indent every paragraph including the first, the way ad copy of this era
-   ran — there is no drop cap and no space between paragraphs. */
-.tw80-copy p {
-  text-indent: 1.25em;
-}
-
-.tw80-copy p:first-child {
-  text-indent: 1.25em;
+/* The two duality lines. Italic, as on the real page, but on Baskerville
+   rather than the site's Garamond. */
+.tw80-duality {
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.45;
+  max-width: 54ch;
+  margin: 0;
 }
 
 /* ── Framed pictures ──────────────────────────────────────────────── */
@@ -160,8 +166,9 @@
 }
 
 .tw80-caption {
-  font-family: var(--geo-ad);
-  font-weight: 700;
+  font-family: var(--serif-ad);
+  font-weight: 400;
+  font-style: italic;
   font-size: 0.66rem;
   letter-spacing: 0.06em;
   color: var(--ad-gold);
@@ -189,8 +196,8 @@
 /* "GENERAL (GE) ELECTRIC" — heavy caps, wide tracking, a device between the
    words. Here the play title takes the same shape. */
 .tw80-lockup {
-  font-family: var(--geo-ad);
-  font-weight: 700;
+  font-family: var(--display-ad);
+  font-weight: 400;
   font-size: clamp(1.3rem, 3.6vw, 2.5rem);
   letter-spacing: 0.1em;
   text-transform: uppercase;

@@ -31,12 +31,11 @@ export const Route = createFileRoute("/lab")({
     links: [
       {
         rel: "stylesheet",
-        // Free stand-ins for the licensed faces adreform.com uses, which is
-        // where its period feel comes from: Oswald descends from Alternate
-        // Gothic (its condensed ad-gothic headlines), Jost is the Futura
-        // geometric that stands in for ITC Avant Garde, and Tinos is
-        // Times-metric for the ad copy itself.
-        href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Jost:wght@400;500;700&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap",
+        // Oswald descends from Alternate Gothic, the condensed ad gothic in
+        // adreform's stack; Tinos is Times-metric for the ad copy. The
+        // geometric role is Poppins, already loaded site-wide, standing in
+        // for ITC Avant Garde — so it isn't requested again here.
+        href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap",
       },
     ],
   }),

@@ -30,7 +30,11 @@
      Jost is a Futura geometric standing in for ITC Avant Garde, the face
      that dates a page to the seventies faster than anything else. */
   --gothic-ad: "Oswald", "Haettenschweiler", "Arial Narrow", sans-serif;
-  --geo-ad: "Jost", "Century Gothic", "Futura", sans-serif;
+  /* Poppins stands in for ITC Avant Garde Gothic — the face both of Reid's
+     retro references run on. Closer than Futura: same circular geometry and
+     single-storey a, and a large x-height where Futura's is small. It is
+     already loaded site-wide, so it also costs nothing here. */
+  --geo-ad: "Poppins", "Century Gothic", sans-serif;
   --serif-ad: "Tinos", "Times New Roman", Times, serif;
 
   /* Halftone cell size. 3px reads as newsprint at 1x; the screen is scaled

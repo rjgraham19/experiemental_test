@@ -53,9 +53,14 @@
      bottom layer.
 
      cover rather than repeat: it's a photograph of one sheet, so tiling would
-     show its seams. Scaled to the whole scrolling page, which reads as the
-     page being printed on a single piece of stock. The source was 9.7MB, so
-     it's downscaled and converted to WebP — 128KB. */
+     show its seams.
+
+     fixed is what keeps it sharp. Scrolling attachment made cover stretch the
+     texture over the entire page height — on a 2900px page that upscaled a
+     2000px-wide image to about 2280px, which is what read as blurry. Fixed
+     scales it to the viewport instead, so it renders at or below its native
+     size on any normal screen, and the sheet stays put as the page moves
+     over it. Source was 9.7MB; this is 2000px WebP at 317KB. */
   background-image:
     radial-gradient(circle at 20% 30%, rgba(101, 77, 48, 0.09), transparent 38%),
     radial-gradient(circle at 78% 65%, rgba(241, 234, 213, 0.035), transparent 42%),
@@ -63,6 +68,7 @@
   background-size: auto, auto, cover;
   background-position: center, center, center;
   background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll, scroll, fixed;
   color: var(--ad-white);
   font-family: var(--serif-ad);
   /* Libre Baskerville runs large on the body for its size, so this sits a

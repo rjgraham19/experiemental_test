@@ -199,7 +199,10 @@
   background-color: hsl(0 0% 10% / 0.85);
   color: var(--color-foreground);
   font-family: var(--font-display);
-  font-weight: 500;
+  /* Extra-light, to echo the thin "Design" in the wordmark. 100 to match it
+     exactly renders too fragile at this size — at 11px the strokes start
+     breaking up against the dark pill — so 200 is as thin as it holds. */
+  font-weight: 200;
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;

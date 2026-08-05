@@ -94,7 +94,10 @@ function FilterPill({
     <Link
       to="/work"
       search={to}
-      className={`px-5 py-2 rounded-full border text-xs md:text-sm uppercase tracking-[0.2em] transition-colors duration-[350ms] ${
+      // Display family at extra-light, matching the pills and the thin
+      // "Design" in the wordmark. This row previously fell through to the body
+      // font, which is why it read as a second typeface.
+      className={`font-display font-extralight px-5 py-2 rounded-full border text-xs md:text-sm uppercase tracking-[0.2em] transition-colors duration-[350ms] ${
         active
           ? "bg-foreground text-black border-foreground"
           : "border-foreground/30 text-foreground/45 hover:border-foreground hover:text-foreground"

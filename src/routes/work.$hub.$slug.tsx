@@ -930,7 +930,11 @@ function ProjectPage() {
         </section>
       )}
 
-      {/* Back to feed + next */}
+      {/* Back to feed + next. Suppressed in the panel: the feed is already
+          sitting right behind it, so onward navigation belongs to that page,
+          not to a window floating over it. In the panel the project simply
+          ends with its last section. */}
+      {!panel && (
       <section className="border-t border-border px-6 md:px-12 lg:px-16 py-20 grid grid-cols-1 md:grid-cols-2 gap-8">
         {project.tags && project.tags.length > 0 ? (
           <Link
@@ -972,9 +976,11 @@ function ProjectPage() {
           </h3>
         </Link>
       </section>
+      )}
 
-
-      <SiteFooter />
+      {/* Footer likewise — the wordmark, the statement line and the contact
+          details belong to the site, and the site is the page behind. */}
+      {!panel && <SiteFooter />}
 
       </div>{/* end light-zone */}
 

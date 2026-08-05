@@ -34,7 +34,7 @@ function Contact() {
           The studio is open
         </p>
 
-        <h1 className="font-display font-medium uppercase leading-[0.85] tracking-[-0.03em] text-5xl md:text-8xl">
+        <h1 className="font-display font-black uppercase leading-[0.85] tracking-[-0.03em] text-5xl md:text-8xl">
           Get in touch
         </h1>
 
@@ -53,7 +53,7 @@ function Contact() {
             >
               <div className="absolute inset-0 p-8 md:p-10 flex flex-col">
                 <div>
-                  <p className="font-display font-medium uppercase tracking-tight text-2xl md:text-3xl">
+                  <p className="font-display font-black uppercase tracking-tight text-2xl md:text-3xl">
                     Reid Graham
                   </p>
                   <p className="mt-1 text-xs tracking-[0.2em] uppercase text-black/60">
@@ -113,7 +113,7 @@ function Contact() {
               <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-4">
                 About Me
               </p>
-              <h2 className="font-display font-medium uppercase leading-[0.9] tracking-[-0.02em] text-4xl md:text-6xl">
+              <h2 className="font-display font-black uppercase leading-[0.9] tracking-[-0.02em] text-4xl md:text-6xl">
                 Hi <span className="text-accent">:)</span>
               </h2>
               <p className="mt-6 font-display font-light text-lg md:text-2xl leading-snug text-foreground/85 max-w-xl text-balance">
@@ -151,7 +151,7 @@ function Contact() {
             className="w-full max-w-3xl aspect-[8.5/11] bg-white text-black rounded-md shadow-2xl overflow-hidden p-10 md:p-16"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="font-display font-medium uppercase tracking-tight text-4xl md:text-6xl">
+            <p className="font-display font-black uppercase tracking-tight text-4xl md:text-6xl">
               Reid Graham
             </p>
             <p className="mt-2 text-sm tracking-[0.2em] uppercase text-black/60">

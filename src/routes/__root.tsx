@@ -18,7 +18,7 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-md text-center">
         <p className="font-display text-[10px] tracking-[0.3em] uppercase text-accent">Error 404</p>
-        <h1 className="mt-6 font-display text-6xl font-medium tracking-tighter uppercase">
+        <h1 className="mt-6 font-display text-6xl font-extrabold tracking-tighter uppercase">
           Lost in the dark.
         </h1>
         <p className="mt-4 font-serif italic text-lg text-muted-foreground">
@@ -47,7 +47,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-md text-center">
         <p className="font-display text-[10px] tracking-[0.3em] uppercase text-accent">Interruption</p>
-        <h1 className="mt-6 font-display text-4xl font-medium tracking-tighter uppercase">
+        <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tighter uppercase">
           The set collapsed.
         </h1>
         <p className="mt-4 font-serif italic text-muted-foreground">
@@ -98,11 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        // Instrument Sans replaces Inter for body copy. Inter Tight is gone
-        // with it — it was only ever a fallback behind Poppins and never
-        // actually rendered. Poppins keeps its light weights for display copy,
-        // but 900 is now only used by the two wordmarks.
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@100;200;300;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter+Tight:wght@400;600;700;800&family=Poppins:wght@100;200;300;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap",
       },
     ],
   }),

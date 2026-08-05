@@ -8,7 +8,7 @@ export function SiteFooter() {
           <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-4">
             Reid Graham Design
           </p>
-          <h2 className="font-display font-medium uppercase tracking-[-0.02em] leading-[0.9] text-3xl md:text-5xl text-balance">
+          <h2 className="font-display font-black uppercase tracking-[-0.02em] leading-[0.9] text-3xl md:text-5xl text-balance">
             Design what you want the world to feel like.
           </h2>
         </div>

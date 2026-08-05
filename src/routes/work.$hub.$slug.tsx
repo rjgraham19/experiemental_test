@@ -34,6 +34,12 @@ import {
 } from "@/lib/projects";
 
 export const Route = createFileRoute("/work/$hub/$slug")({
+  /* panel=1 is set only when this page is rendered inset over the feed. It
+     suppresses the site nav: the wordmark and top-level links belong to the
+     page showing behind the panel, and repeating them there reads as the site
+     nested inside itself. Absent — a direct visit — nothing changes. */
+  validateSearch: (search: Record<string, unknown>): { panel?: boolean } =>
+    search.panel === "1" || search.panel === true ? { panel: true } : {},
   loader: ({ params }) => {
     const project = projectBySlug(params.slug);
     if (!project || project.hub !== params.hub) throw notFound();
@@ -79,6 +85,7 @@ const MOOD_STYLES: Record<Mood, { wrap: string; enter: string }> = {
 
 function ProjectPage() {
   const { project } = Route.useLoaderData();
+  const { panel } = Route.useSearch();
   const hub = HUBS.find((h) => h.slug === project.hub)!;
   const mood = MOOD_STYLES[(project.mood ?? "concrete") as Mood];
 
@@ -172,7 +179,7 @@ function ProjectPage() {
 
   return (
     <div className={`relative ${mood.wrap}${isLollapalooza ? " lolla-cursor" : ""}`}>
-      <SiteNav />
+      {!panel && <SiteNav />}
 
       {/* Back — to /work for tagged projects, to hub for visualizations */}
       <div className="pt-28 md:pt-32 px-6 md:px-12 lg:px-16">

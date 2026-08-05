@@ -58,13 +58,33 @@ export function ProjectModal({
 
   const onFrameLoad = useCallback(
     (e: React.SyntheticEvent<HTMLIFrameElement>) => {
-      // Same-origin, so Escape can be wired up inside the panel too. Guarded
-      // anyway: if the document ever isn't reachable, the outer listener and
-      // the backdrop still close it.
+      // Same-origin, so the panel's document can be tidied from here.
+      // Guarded throughout: if it ever isn't reachable, the panel still works
+      // and the outer listener and backdrop still close it.
       try {
         const doc = e.currentTarget.contentDocument;
-        doc?.addEventListener("keydown", (ev) => {
+        if (!doc) return;
+
+        doc.addEventListener("keydown", (ev) => {
           if ((ev as KeyboardEvent).key === "Escape") onClose();
+        });
+
+        // Hide the panel's scrollbar. It sits inside the rounded corners and
+        // reads as a browser chrome artefact rather than part of the page.
+        // Scrolling itself is untouched.
+        const style = doc.createElement("style");
+        style.textContent =
+          "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}";
+        doc.head.appendChild(style);
+
+        // "Back to Projects" should dismiss the panel rather than load the
+        // feed inside it, which would leave the site nested in itself.
+        doc.querySelectorAll<HTMLAnchorElement>('a[href^="/work"]').forEach((a) => {
+          if (!/back to/i.test(a.textContent ?? "")) return;
+          a.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            onClose();
+          });
         });
       } catch {
         /* cross-origin — outer close paths still work */
@@ -80,13 +100,15 @@ export function ProjectModal({
       aria-modal="true"
       aria-label={title}
     >
-      {/* The feed stays visible and blurred behind, so it reads as a layer
-          over the page rather than a new page. Clicking it closes. */}
+      {/* Glass rather than a scrim. A heavy dark veil hid the feed, which made
+          the panel read as a new page; a light, low-opacity tint over a
+          gentler blur keeps the feed legible underneath, so it stays obvious
+          that the page is only inset and that clicking out returns to it. */}
       <button
         type="button"
         onClick={onClose}
         aria-label="Close project"
-        className="absolute inset-0 h-full w-full cursor-zoom-out bg-black/55 backdrop-blur-md"
+        className="absolute inset-0 h-full w-full cursor-zoom-out bg-white/[0.07] backdrop-blur-[5px]"
       />
 
       <div
@@ -94,8 +116,12 @@ export function ProjectModal({
         tabIndex={-1}
         className="absolute inset-x-[3vw] inset-y-[4vh] overflow-hidden rounded-lg bg-background shadow-[0_30px_90px_rgba(0,0,0,0.7)] outline-none md:inset-x-[5vw]"
       >
+        {/* panel=1 tells the project page it's inset, so it drops the site
+            nav — inside the panel the wordmark and top-level links belong to
+            the page behind, and repeating them reads as a site within a site.
+            The back link is all the navigation the panel needs. */}
         <iframe
-          src={url}
+          src={`${url}?panel=1`}
           title={title}
           onLoad={onFrameLoad}
           className="h-full w-full border-0"

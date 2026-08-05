@@ -182,7 +182,14 @@ function ProjectPage() {
       {!panel && <SiteNav />}
 
       {/* Back — to /work for tagged projects, to hub for visualizations */}
-      <div className="pt-28 md:pt-32 px-6 md:px-12 lg:px-16">
+      {/* The tall top padding exists to clear the fixed site nav. In the panel
+          there is no nav, so it was 128px of dead black above the back link —
+          the top edge of the "black perimeter". */}
+      <div
+        className={`px-6 md:px-12 lg:px-16 ${
+          panel ? "pt-5 md:pt-6" : "pt-28 md:pt-32"
+        }`}
+      >
         {project.tags && project.tags.length > 0 ? (
           <Link
             to="/work"
@@ -293,7 +300,17 @@ function ProjectPage() {
                 ? "relative -mt-[340px] md:-mt-[540px]"
                 : "relative -mt-[300px]"
               : "col-start-1 row-start-1"
-          } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"} ${
+          } ${
+            /* Full bleed in the panel. The standard 64px gutter left the hero
+               sitting inside a black border, which is the effect Reid was
+               seeing at the sides; letting the image meet the panel edge reads
+               as intentional framing instead. */
+            panel
+              ? "px-0"
+              : isPortraitHero
+                ? "px-6 md:px-0"
+                : "px-6 md:px-12 lg:px-16"
+          } ${
             /* nudged down so the title clears more of the composition and the
                stacked views alongside sit within the page rather than above it */
             isReshuffling ? "mt-10 md:mt-24" : ""

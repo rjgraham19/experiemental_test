@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { TrueWest80s } from "@/lab/TrueWest80s";
 
 /**
  * The lab — a scratch page that only exists on the `lab` branch.
@@ -25,6 +26,14 @@ export const Route = createFileRoute("/lab")({
       { title: "Lab — Reid Graham" },
       { name: "robots", content: "noindex, nofollow" },
     ],
+    // Experiment fonts load here rather than in __root.tsx, so the real site
+    // never downloads them and the shared file stays untouched.
+    links: [
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Abril+Fatface&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap",
+      },
+    ],
   }),
   component: LabPage,
 });
@@ -47,15 +56,10 @@ function LabPage() {
         </Link>
       </header>
 
-      <main className="px-6 md:px-10">
+      <main>
         {/* ── Experiments go below this line ─────────────────────────── */}
 
-        <div className="flex min-h-[70vh] items-center justify-center rounded-md border border-dashed border-border">
-          <p className="max-w-sm px-6 text-center text-sm text-foreground/45">
-            Empty on purpose. Whatever we try goes here — nothing on this
-            branch can reach the real site.
-          </p>
-        </div>
+        <TrueWest80s />
 
         {/* ── End experiments ────────────────────────────────────────── */}
       </main>

@@ -3,119 +3,127 @@ import { projectBySlug, type Credit, type MediaItem } from "@/lib/projects";
 import "./true-west-80s.css";
 
 /**
- * True West as a 1980s shelter magazine. LAB ONLY.
+ * True West as a vintage appliance advertisement. LAB ONLY.
  *
- * Reuses the real project's data and photographs from src/lib/projects.ts —
- * only the presentation is invented here, so there's one copy of the content
- * and the experiment can't drift out of sync with the real page.
+ * Structured after Reid's GE Top Freezer reference, beat for beat:
  *
- * The point being tested: whether a project page can abandon the site's black
- * minimalism completely — type, colour, texture, layout — and still feel like
- * the same portfolio. Everything is scoped to .tw80.
+ *   headline (first half of a spoken sentence)
+ *   → grid of gold-framed product shots
+ *   → headline (second half, completing the sentence)
+ *   → three columns: ad copy | hero photograph | ad copy
+ *   → boxed badge and a spaced-capitals brand lockup
+ *
+ * The pull quote splits across the two headlines the way the reference
+ * splits "The greatest invention since the ice cube" / "is now on the GE Top
+ * Freezer Refrigerator." — which is what produces the pitchman cadence.
+ *
+ * Content comes from projects.ts, so there's one copy of it and this can't
+ * drift out of sync with the real page.
  */
+
 export function TrueWest80s() {
   const project = projectBySlug("true-west");
   if (!project) return <p className="p-10">True West not found in projects.ts</p>;
 
   const [full, second, render1, render2, diagram] = project.media as MediaItem[];
+
+  /* The flanking columns take the duality pair rather than the description.
+     The description's closing sentence is the pull quote word for word, and
+     the pull quote is already carrying both headlines — splitting it in here
+     as well printed the same line twice on one page. The duality lines are
+     the two ideas the description opens with, minus that repetition. */
   const [westLine, suburbLine] = project.dualityLines ?? ["", ""];
 
+  // The pull quote, split so it runs across the two headlines.
+  const quote = project.pullQuote ?? "";
+  const [headA, headB] = quote.includes(" as ")
+    ? [quote.slice(0, quote.indexOf(" as ")), quote.slice(quote.indexOf(" as ") + 1)]
+    : [quote, ""];
+
+  const grid: MediaItem[] = [second, render1, render2, diagram];
+
   return (
-    <article className="tw80 min-h-screen px-5 py-8 md:px-12 md:py-14 lg:px-20">
-      {/* Masthead — an issue line and a folio, the furniture that tells you
-          you're holding a magazine before you've read a word. */}
-      <header className="tw80-masthead">
-        <div className="flex items-baseline justify-between gap-4">
-          <p className="tw80-kicker">Newman Studio · Ann Arbor</p>
-          <p className="tw80-kicker">No. 04 · Scenic</p>
-        </div>
+    <article className="tw80 min-h-screen px-4 py-8 md:px-10 md:py-12 lg:px-16">
+      <p className="tw80-label text-center">Newman Studio · University of Michigan</p>
 
-        <h1 className="tw80-headline mt-5 uppercase">True West</h1>
+      <h1 className="tw80-headline mt-4">{headA}</h1>
 
-        <div className="mt-5 flex flex-col gap-4 pb-1 md:flex-row md:items-end md:justify-between">
-          <p className="tw80-deck">{project.pullQuote}</p>
-          <p className="tw80-label shrink-0">{project.subtitle}</p>
-        </div>
-      </header>
-
-      {/* Opening plate, full measure. */}
-      <figure className="tw80-figure mt-8 md:mt-12">
-        <img src={full.src} alt={full.caption ?? "True West set"} />
-        <figcaption>
-          <b>Plate I</b>
-          {full.caption}
-        </figcaption>
-      </figure>
-
-      {/* Feature text, set in columns with a drop cap. */}
-      <section className="tw80-cols mt-10 md:mt-14">
-        <p className="tw80-dropcap">{project.description}</p>
-      </section>
-
-      {/* The duality, given facing panels — the argument of the design set as
-          a spread rather than described in a caption. */}
-      <section className="mt-12 grid grid-cols-1 gap-5 md:mt-16 md:grid-cols-2">
-        <div className="tw80-panel tw80-panel-west">
-          <p className="tw80-label mb-3">The Wild West</p>
-          <p>{westLine}</p>
-        </div>
-        <div className="tw80-panel tw80-panel-suburb">
-          <p className="tw80-label mb-3">Suburbia</p>
-          <p>{suburbLine}</p>
-        </div>
-      </section>
-
-      <hr className="tw80-rule-double mt-12 md:mt-16" />
-
-      {/* Second act, given the weight of a turned page. */}
-      <figure className="tw80-figure mt-8 md:mt-12">
-        <img src={second.src} alt={second.caption ?? "Second act"} />
-        <figcaption>
-          <b>Plate II</b>
-          {second.caption}
-        </figcaption>
-      </figure>
-
-      <blockquote className="tw80-pull mx-auto mt-12 max-w-3xl md:mt-16">
-        “{project.pullQuote}”
-      </blockquote>
-
-      {/* Studies, paired the way a magazine runs supporting art. */}
-      <section className="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-2">
-        {[render1, render2].map((m, i) => (
-          <figure key={m.src} className="tw80-figure">
-            <img src={m.src} alt={m.caption ?? "Model study"} />
-            <figcaption>
-              <b>Fig. {i + 1}</b>
-              {m.caption}
-            </figcaption>
+      {/* Gold-framed grid, after the reference's six-up of product shots. */}
+      <section className="mt-7 grid grid-cols-2 gap-3 md:mt-9 md:gap-4 lg:grid-cols-4">
+        {grid.map((m, i) => (
+          <figure key={m.src} className="tw80-frame">
+            <img src={m.src} alt={m.caption ?? `${project.title} view ${i + 1}`} />
           </figure>
         ))}
       </section>
 
-      <figure className="tw80-figure mt-8 md:mt-12">
-        <img src={diagram.src} alt={diagram.caption ?? "Plan comparison"} />
-        <figcaption>
-          <b>Plan</b>
-          {diagram.caption}
-        </figcaption>
-      </figure>
+      <h2 className="tw80-headline mt-7 md:mt-9">
+        {headB && <span className="tw80-gold">{headB}</span>}
+      </h2>
 
-      {/* Credits as a masthead block, which is where a magazine would put
-          them — not as a list appended to the end of a web page. */}
-      <footer className="mt-14 md:mt-20">
-        <hr className="tw80-rule-double" />
-        <dl className="tw80-credits mt-6 grid grid-cols-1 gap-x-10 sm:grid-cols-2 md:grid-cols-3">
-          {project.credits?.map((c: Credit) => (
-            <div key={c.role}>
-              <dt>{c.role}</dt>
-              <dd>{c.name}</dd>
-            </div>
+      {/* Copy | photograph | copy — the reference's lower half. */}
+      <section className="mt-7 grid grid-cols-1 gap-6 md:mt-9 md:grid-cols-[1fr_1.15fr_1fr] md:gap-7">
+        <div className="tw80-copy">
+          <p className="tw80-label mb-2" style={{ textIndent: 0 }}>
+            The Wild West
+          </p>
+          <p>{westLine}</p>
+        </div>
+
+        <figure className="tw80-frame self-start">
+          <img src={full.src} alt={full.caption ?? "Full set"} />
+        </figure>
+
+        <div className="tw80-copy">
+          <p className="tw80-label mb-2" style={{ textIndent: 0 }}>
+            Suburbia
+          </p>
+          <p>{suburbLine}</p>
+
+          {/* The badge that sat in the reference's lower-right corner. */}
+          <div className="tw80-badge mt-5" style={{ textIndent: 0 }}>
+            <p className="tw80-label mb-2">Built by</p>
+            <dl className="space-y-1.5" style={{ textIndent: 0 }}>
+              {project.credits?.map((c: Credit) => (
+                <div key={c.role}>
+                  <dt className="tw80-label" style={{ letterSpacing: "0.14em" }}>
+                    {c.role}
+                  </dt>
+                  <dd className="m-0 text-[0.95rem]">{c.name}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      {/* Plate list, set as the small-print spec line these ads carried. */}
+      <section className="mt-8 md:mt-10">
+        <hr className="tw80-rule-gold" />
+        <div className="mt-3 grid grid-cols-1 gap-x-8 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
+          {grid.map((m, i) => (
+            <p key={m.src} className="tw80-caption">
+              Fig. {i + 1} — {m.caption}
+            </p>
           ))}
-        </dl>
+        </div>
+      </section>
 
-        <div className="mt-8 flex items-baseline justify-between gap-4 border-t pt-4" style={{ borderColor: "var(--rule)" }}>
-          <p className="tw80-label">Lab experiment · not the live page</p>
+      {/* Brand lockup, after "GENERAL (GE) ELECTRIC". */}
+      <footer className="mt-10 md:mt-14">
+        <hr className="tw80-rule-gold" />
+        <p className="tw80-lockup mt-6">
+          <span>True</span>
+          <span className="tw80-seal">RG</span>
+          <span>West</span>
+        </p>
+        <p className="tw80-label mt-3 text-center">{project.subtitle}</p>
+
+        <div
+          className="mt-8 flex items-baseline justify-between gap-4 border-t pt-4"
+          style={{ borderColor: "#ffffff22" }}
+        >
+          <span className="tw80-label">Lab experiment · not the live page</span>
           <Link to="/lab" className="tw80-label underline underline-offset-4">
             ← Back to lab
           </Link>

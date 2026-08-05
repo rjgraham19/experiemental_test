@@ -31,7 +31,10 @@ export const Route = createFileRoute("/lab")({
     links: [
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Abril+Fatface&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap",
+        // Archivo carries a real width axis, so the headline can be genuinely
+        // condensed rather than squashed; Tinos is Times-metric, which is the
+        // serif the reference's ad copy is actually set in.
+        href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75,700;87.5,700&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap",
       },
     ],
   }),

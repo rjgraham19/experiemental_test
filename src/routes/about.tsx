@@ -54,7 +54,7 @@ function About() {
           <p className="text-[10px] tracking-[0.35em] uppercase text-accent mb-8">
             Studio profile
           </p>
-          <h1 className="font-display text-5xl md:text-8xl font-extrabold tracking-tighter uppercase leading-[0.9]">
+          <h1 className="font-display text-5xl md:text-8xl font-medium tracking-tighter uppercase leading-[0.9]">
             Every room
             <br />
             has a story
@@ -126,7 +126,7 @@ function About() {
               <span className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
                 0{i + 1}
               </span>
-              <h3 className="mt-4 font-display text-2xl md:text-3xl font-extrabold tracking-tighter uppercase">
+              <h3 className="mt-4 font-display text-2xl md:text-3xl font-medium tracking-tighter uppercase">
                 {p.title}
               </h3>
               <p className="mt-4 font-serif italic text-muted-foreground leading-relaxed">
@@ -181,7 +181,7 @@ function About() {
           to="/contact"
           className="group inline-flex items-baseline gap-6 hover:text-accent transition-colors"
         >
-          <span className="font-display text-4xl md:text-7xl font-extrabold tracking-tighter uppercase">
+          <span className="font-display text-4xl md:text-7xl font-medium tracking-tighter uppercase">
             Start a conversation
           </span>
           <span className="text-[10px] tracking-[0.3em] uppercase">→</span>

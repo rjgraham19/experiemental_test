@@ -37,9 +37,9 @@
   --color-ring: var(--ring);
   --color-ash: var(--ash);
 
-  --font-display: "Poppins", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "EB Garamond", ui-serif, Georgia, serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --ease-cinematic: cubic-bezier(0.32, 0.72, 0, 1);

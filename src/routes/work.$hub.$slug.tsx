@@ -253,7 +253,7 @@ function ProjectPage() {
 
             <AnimatedHeading
               text={project.title}
-              className="font-display font-black uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(2rem,11vw,3rem)] md:text-[clamp(3rem,8.5vw,6rem)] text-balance max-w-5xl"
+              className="font-display font-medium uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(2rem,11vw,3rem)] md:text-[clamp(3rem,8.5vw,6rem)] text-balance max-w-5xl"
             />
 
             <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-foreground/50">
@@ -669,7 +669,7 @@ function ProjectPage() {
               <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-4">
                 Time / Space
               </p>
-              <h2 className="font-display font-black uppercase tracking-tight text-3xl md:text-5xl mb-12">
+              <h2 className="font-display font-medium uppercase tracking-tight text-3xl md:text-5xl mb-12">
                 Five projected aesthetics
               </h2>
               <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -685,7 +685,7 @@ function ProjectPage() {
                     <p className="text-[10px] tracking-[0.3em] uppercase text-accent mb-3">
                       0{i + 1}
                     </p>
-                    <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-3xl mb-4">
+                    <h3 className="font-display font-medium uppercase tracking-tight text-2xl md:text-3xl mb-4">
                       {c.title}
                     </h3>
                     <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-1">
@@ -917,7 +917,7 @@ function ProjectPage() {
             <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-4">
               Return to
             </p>
-            <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-4xl group-hover:text-accent transition-colors">
+            <h3 className="font-display font-medium uppercase tracking-tight text-2xl md:text-4xl group-hover:text-accent transition-colors">
               ← All Projects
             </h3>
           </Link>
@@ -930,7 +930,7 @@ function ProjectPage() {
             <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-4">
               Return to
             </p>
-            <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-4xl group-hover:text-accent transition-colors">
+            <h3 className="font-display font-medium uppercase tracking-tight text-2xl md:text-4xl group-hover:text-accent transition-colors">
               ← {hub.title}
             </h3>
           </Link>
@@ -943,7 +943,7 @@ function ProjectPage() {
           <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-4">
             Next
           </p>
-          <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-4xl group-hover:text-accent transition-colors">
+          <h3 className="font-display font-medium uppercase tracking-tight text-2xl md:text-4xl group-hover:text-accent transition-colors">
             {next.title} →
           </h3>
         </Link>

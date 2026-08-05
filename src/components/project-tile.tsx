@@ -28,7 +28,7 @@ export function ProjectTile({ project }: { project: Project }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-95 group-hover:opacity-85 transition-opacity duration-500" />
           <div className="absolute bottom-4 left-4 right-4">
-            <h2 className="font-display font-black uppercase tracking-tight text-xl md:text-2xl lg:text-3xl leading-[0.95] text-balance text-foreground group-hover:text-accent transition-colors line-clamp-3">
+            <h2 className="font-display font-medium uppercase tracking-tight text-xl md:text-2xl lg:text-3xl leading-[0.95] text-balance text-foreground group-hover:text-accent transition-colors line-clamp-3">
               {project.title}
             </h2>
           </div>

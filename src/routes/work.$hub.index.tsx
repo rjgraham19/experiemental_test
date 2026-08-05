@@ -53,7 +53,7 @@ function HubPage() {
 
       {/* Header + grid — mirrors the /work feed so the two read consistently */}
       <section className="px-6 md:px-12 lg:px-16 pt-32 md:pt-40 pb-16 md:pb-24">
-        <h1 className="font-display font-black uppercase tracking-tight text-5xl md:text-7xl lg:text-8xl leading-[0.9] text-foreground mb-8 md:mb-10">
+        <h1 className="font-display font-medium uppercase tracking-tight text-5xl md:text-7xl lg:text-8xl leading-[0.9] text-foreground mb-8 md:mb-10">
           {hub.title}
         </h1>
 
@@ -77,7 +77,7 @@ function HubPage() {
           <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/50 mb-3">
             Return to
           </p>
-          <h3 className="font-display font-black uppercase tracking-tight text-3xl md:text-4xl group-hover:text-accent transition-colors">
+          <h3 className="font-display font-medium uppercase tracking-tight text-3xl md:text-4xl group-hover:text-accent transition-colors">
             ← All Projects
           </h3>
           <p className="mt-3 text-sm text-foreground/60 max-w-md">

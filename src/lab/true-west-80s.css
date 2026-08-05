@@ -130,42 +130,93 @@
 
 /* ── Framed pictures ──────────────────────────────────────────────── */
 
-/* Gold keyline over a wood mat, as in the reference's six-up grid. The mat
-   is a gradient rather than a texture image so it costs nothing and still
-   reads as grain at a glance. */
-.tw80-frame {
-  padding: 0.18rem;
-  background-image: linear-gradient(
-    100deg,
-    var(--ad-wood-deep),
-    var(--ad-wood) 45%,
-    var(--ad-wood-deep)
-  );
-  border: 2px solid var(--ad-gold);
+/* Printed cream border. The gold keyline and wood mat are gone: this is an
+   ink rectangle laid on the page, roughened by an SVG displacement filter so
+   its edges fray and bleed the way ink does on absorbent stock.
+
+   ::before is the border itself — a filled box with its centre masked out,
+   so only the 4px rim paints and the photograph underneath is never covered.
+   ::after adds very faint halftone speckle just outside that rim. */
+.print-frame {
+  --frame-color: #eee2bd;
+  position: relative;
+  display: block;
+  margin: 4px;
 }
 
-.tw80-frame img {
+.print-frame::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  z-index: 2;
+  padding: 4px;
+  pointer-events: none;
+  background: var(--frame-color);
+  filter: url("#rough-print-edge");
+  opacity: 0.96;
+
+  /* Mask the fill out of the centre, leaving only the rim. The unprefixed
+     properties are here as well as the -webkit- ones so this works in
+     Firefox, which supports mask-composite but not the webkit alias. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.print-frame::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  z-index: 3;
+  padding: 7px;
+  pointer-events: none;
+  opacity: 0.18;
+
+  background-image: radial-gradient(
+    circle,
+    var(--frame-color) 0.45px,
+    transparent 0.7px
+  );
+  background-size: 3px 3px;
+  filter: blur(0.2px);
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.print-frame img {
   display: block;
   width: 100%;
-  height: auto;
-  border: 1px solid #00000055;
-  /* Barely touched. The previous heavy sepia and 1.34 contrast were crushing
-     the photographs to sell the screen; the screen is subtle enough now that
-     the images can keep their own tonality. */
+  border: 0;
+  border-radius: 0;
+  /* Barely touched. The images keep their own tonality; the print quality
+     comes from the ground, the grain and the screen below. */
   filter: saturate(0.88) contrast(0.97);
 }
 
 /* The halftone screen over each photograph — present but not obscuring.
-   At 0.09 it reads as tooth in the print rather than as an effect, which is
-   the difference between a photograph that was printed and a photograph with
-   dots on it. Multiply keeps the ink in the image's own shadows. */
-.tw80-frame {
+   On its own wrapper rather than on .print-frame, because the frame needs
+   both its pseudo-elements for the border. Clipped and isolated here so the
+   screen stays inside the image and can't touch the printed rim outside it. */
+.tw80-screen {
   position: relative;
+  display: block;
   isolation: isolate;
   overflow: hidden;
 }
 
-.tw80-frame::after {
+.tw80-screen::after {
   content: "";
   position: absolute;
   inset: 0;

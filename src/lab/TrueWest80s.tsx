@@ -31,6 +31,30 @@ export function TrueWest80s() {
 
   return (
     <article className="tw80 min-h-screen pb-10">
+      {/* Roughening filter for the printed borders. Declared once; every
+          .print-frame references it by id. Zero-sized and hidden from
+          assistive tech since it renders nothing itself. */}
+      <svg width="0" height="0" aria-hidden="true" focusable="false" className="absolute">
+        <filter id="rough-print-edge" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.035"
+            numOctaves={3}
+            seed={8}
+            result="noise"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="noise"
+            scale="1.8"
+            xChannelSelector="R"
+            yChannelSelector="G"
+            result="roughened"
+          />
+          <feGaussianBlur in="roughened" stdDeviation="0.18" />
+        </filter>
+      </svg>
+
       {/* Hero — title over the cover image, as on the real page. */}
       <header className="relative grid grid-cols-1 grid-rows-1">
         <div className="col-start-1 row-start-1 z-10 self-start px-5 pt-8 md:px-10 md:pt-12">
@@ -38,8 +62,10 @@ export function TrueWest80s() {
           <h1 className="tw80-headline tw80-headline-left mt-3">{project.title}</h1>
         </div>
 
-        <figure className="col-start-1 row-start-1 tw80-frame">
-          <img src={cover.src} alt={cover.caption ?? project.title} />
+        <figure className="col-start-1 row-start-1 print-frame">
+          <span className="tw80-screen">
+            <img src={cover.src} alt={cover.caption ?? project.title} />
+          </span>
         </figure>
       </header>
 
@@ -71,18 +97,22 @@ export function TrueWest80s() {
           model studies stacked right — matching the real page exactly. */}
       <section className="px-5 py-6 md:px-10 md:py-8">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-[55fr_45fr] md:gap-4">
-          <figure className="tw80-frame h-full">
-            <img
-              src={second.src}
-              alt={second.caption ?? project.title}
-              className="h-full w-full object-cover"
-            />
+          <figure className="print-frame h-full">
+            <span className="tw80-screen h-full">
+              <img
+                src={second.src}
+                alt={second.caption ?? project.title}
+                className="h-full w-full object-cover"
+              />
+            </span>
           </figure>
 
           <div className="flex flex-col gap-3 md:gap-4">
             {[render1, render2].map((m) => (
-              <figure key={m.src} className="tw80-frame">
-                <img src={m.src} alt={m.caption ?? project.title} />
+              <figure key={m.src} className="print-frame">
+                <span className="tw80-screen">
+                  <img src={m.src} alt={m.caption ?? project.title} />
+                </span>
               </figure>
             ))}
           </div>
@@ -97,12 +127,14 @@ export function TrueWest80s() {
 
       {/* Plan comparison, full width and contained rather than cropped. */}
       <section className="px-5 py-6 md:px-10 md:py-8">
-        <figure className="tw80-frame">
-          <img
-            src={diagram.src}
-            alt={diagram.caption ?? project.title}
-            className="w-full object-contain"
-          />
+        <figure className="print-frame">
+          <span className="tw80-screen">
+            <img
+              src={diagram.src}
+              alt={diagram.caption ?? project.title}
+              className="w-full object-contain"
+            />
+          </span>
         </figure>
         <p className="tw80-caption">{diagram.caption}</p>
       </section>

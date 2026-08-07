@@ -246,7 +246,14 @@ function ProjectPage() {
           }
         >
           <div
-            className={`sticky top-16 md:top-20 pt-10 md:pt-14 bg-gradient-to-b from-black via-black/70 to-transparent ${
+            className={`sticky bg-gradient-to-b from-black via-black/70 to-transparent ${
+              /* The sticky offset and the top padding both exist to clear the
+                 fixed site nav. The panel has no nav, so together they left
+                 about 115px of black above the title — the last of the dead
+                 space at the top of the panel. Pinned to the panel's own top
+                 instead, with just enough padding to breathe. */
+              panel ? "top-0 pt-4 md:pt-5" : "top-16 md:top-20 pt-10 md:pt-14"
+            } ${
               isTitleAbove ? "pb-8 md:pb-10" : "pb-16 md:pb-24 pointer-events-none"
             } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"}`}
           >

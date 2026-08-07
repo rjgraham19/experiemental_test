@@ -252,7 +252,7 @@ function ProjectPage() {
                  about 115px of black above the title — the last of the dead
                  space at the top of the panel. Pinned to the panel's own top
                  instead, with just enough padding to breathe. */
-              panel ? "top-0 pt-4 md:pt-5" : "top-16 md:top-20 pt-10 md:pt-14"
+              panel ? "top-0 pt-9 md:pt-10" : "top-16 md:top-20 pt-10 md:pt-14"
             } ${
               isTitleAbove ? "pb-8 md:pb-10" : "pb-16 md:pb-24 pointer-events-none"
             } ${isPortraitHero ? "px-6 md:px-0" : "px-6 md:px-12 lg:px-16"}`}

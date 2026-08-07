@@ -109,7 +109,7 @@ export function ProjectModal({
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="absolute inset-x-[3vw] bottom-[4vh] top-14 overflow-hidden rounded-lg bg-background shadow-[0_30px_90px_rgba(0,0,0,0.7)] outline-none md:inset-x-[5vw]"
+        className="absolute inset-x-[3vw] bottom-[4vh] top-[4.5rem] overflow-hidden rounded-lg bg-background shadow-[0_30px_90px_rgba(0,0,0,0.7)] outline-none md:inset-x-[5vw]"
       >
         {/* panel=1 tells the project page it's inset, so it drops the site
             nav — inside the panel the wordmark and top-level links belong to
@@ -130,7 +130,7 @@ export function ProjectModal({
       <button
         type="button"
         onClick={onClose}
-        className="pill absolute left-[3vw] top-3 z-10 md:left-[5vw]"
+        className="pill absolute left-[3vw] top-7 z-10 md:left-[5vw]"
       >
         ← Back to Projects
       </button>
@@ -139,7 +139,7 @@ export function ProjectModal({
         type="button"
         onClick={onClose}
         aria-label="Close project"
-        className="pill absolute right-[3vw] top-3 z-10 md:right-[5vw]"
+        className="pill absolute right-[3vw] top-7 z-10 md:right-[5vw]"
       >
         Close ✕
       </button>

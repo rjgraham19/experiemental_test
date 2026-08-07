@@ -77,15 +77,6 @@ export function ProjectModal({
           "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}";
         doc.head.appendChild(style);
 
-        // "Back to Projects" should dismiss the panel rather than load the
-        // feed inside it, which would leave the site nested in itself.
-        doc.querySelectorAll<HTMLAnchorElement>('a[href^="/work"]').forEach((a) => {
-          if (!/back to/i.test(a.textContent ?? "")) return;
-          a.addEventListener("click", (ev) => {
-            ev.preventDefault();
-            onClose();
-          });
-        });
       } catch {
         /* cross-origin — outer close paths still work */
       }
@@ -111,10 +102,14 @@ export function ProjectModal({
         className="absolute inset-0 h-full w-full cursor-zoom-out bg-white/[0.07] backdrop-blur-[5px]"
       />
 
+      {/* Panel top is a fixed distance rather than a viewport fraction, so the
+          controls above it always have room. The previous calc(4vh - 2.6rem)
+          went negative on shorter screens and clipped the close button off the
+          top of the window. */}
       <div
         ref={panelRef}
         tabIndex={-1}
-        className="absolute inset-x-[3vw] inset-y-[4vh] overflow-hidden rounded-lg bg-background shadow-[0_30px_90px_rgba(0,0,0,0.7)] outline-none md:inset-x-[5vw]"
+        className="absolute inset-x-[3vw] bottom-[4vh] top-14 overflow-hidden rounded-lg bg-background shadow-[0_30px_90px_rgba(0,0,0,0.7)] outline-none md:inset-x-[5vw]"
       >
         {/* panel=1 tells the project page it's inset, so it drops the site
             nav — inside the panel the wordmark and top-level links belong to
@@ -128,11 +123,23 @@ export function ProjectModal({
         />
       </div>
 
+      {/* Both controls live in the panel's chrome rather than in the page
+          inside it, so they stay put while the project scrolls. The back link
+          used to be the first thing in the page itself and scrolled away with
+          it; here it mirrors the close button and is always reachable. */}
+      <button
+        type="button"
+        onClick={onClose}
+        className="pill absolute left-[3vw] top-3 z-10 md:left-[5vw]"
+      >
+        ← Back to Projects
+      </button>
+
       <button
         type="button"
         onClick={onClose}
         aria-label="Close project"
-        className="pill absolute right-[3vw] top-[calc(4vh-2.6rem)] z-10 md:right-[5vw]"
+        className="pill absolute right-[3vw] top-3 z-10 md:right-[5vw]"
       >
         Close ✕
       </button>

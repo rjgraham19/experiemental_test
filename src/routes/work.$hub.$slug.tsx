@@ -182,14 +182,13 @@ function ProjectPage() {
       {!panel && <SiteNav />}
 
       {/* Back — to /work for tagged projects, to hub for visualizations */}
-      {/* The tall top padding exists to clear the fixed site nav. In the panel
-          there is no nav, so it was 128px of dead black above the back link —
-          the top edge of the "black perimeter". */}
-      <div
-        className={`px-6 md:px-12 lg:px-16 ${
-          panel ? "pt-5 md:pt-6" : "pt-28 md:pt-32"
-        }`}
-      >
+      {/* Back link, and the tall top padding that clears the fixed site nav.
+          Both are dropped in the panel: the panel puts its own back control in
+          the chrome above the frame, where it stays put instead of scrolling
+          away with the page, and without the nav this padding was just dead
+          black along the top edge. */}
+      {!panel && (
+      <div className="px-6 md:px-12 lg:px-16 pt-28 md:pt-32">
         {project.tags && project.tags.length > 0 ? (
           <Link
             to="/work"
@@ -210,6 +209,7 @@ function ProjectPage() {
           </Link>
         )}
       </div>
+      )}
 
       {/* Header + hero.
           Two arrangements, both keeping the same sticky behaviour:
